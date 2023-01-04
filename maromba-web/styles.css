@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.wrapper {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0 24px;
+  background: linear-gradient(45deg, #000000, #000000, #3E065F, #3E065F, #700B97, #700B97, #8E05C2);
+  background-size: 300% 300%;
+  animation: colors 10s ease infinite;
+  color: #f9f9f9;
+  font-family: "Sora";
+}
+
+@keyframes colors {
+  0% {
+    background-position: 0% 33%;
+  }
+
+  33% {
+    background-position: 33% 66%;
+  }
+
+  66% {
+    background-position: 66% 100%;
+  }
+
+  100% {
+    background-position: 0% 33%;
+  }
+}
+
+@media (width >=500px) {
+  body {
+    padding: 0;
+  }
+}
