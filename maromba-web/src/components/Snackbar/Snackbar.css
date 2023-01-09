@@ -1,0 +1,72 @@
+.snackbar{
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #f9f9f9;
+}
+
+.done {
+    background: linear-gradient(45deg, #000000, #006400, #006400, #228B22, #228B22, #32CD32, #32CD32);
+    background-size: 300% 300% !important;
+    animation: colors 10s ease infinite;
+}
+
+.error {
+    background: linear-gradient(45deg, #000000, #630606, #630606, #890F0D, #890F0D, #FF0000, #FF0000);
+    background-size: 300% 300% !important;
+    animation: colors 10s ease infinite;
+}
+
+.warning {
+    background: linear-gradient(45deg, #000000, #FF8C00, #FF8C00, #FFA500, #FFA500, #FFD700, #FFD700);
+    background-size: 300% 300% !important;
+    animation: colors 10s ease infinite;
+}
+
+.snackbar .symbol {
+    flex: 20%;
+}
+
+.snackbar .message {
+    flex: 80%;
+    text-align: start;
+    font-weight: bold;
+}
+
+#show {
+    visibility: visible;
+    animation: fadeIn 1s, fadeOut 1s 4s;
+}
+
+#hide {
+    visibility: hidden;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        left: -100%;
+    }
+    to {
+        opacity: 1;
+        left: 50%;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        left: 50%;
+    }
+    to {
+        opacity: 0;
+        left: -100%;
+    }
+}
