@@ -7,10 +7,21 @@ interface Props {
     label: string;
     icon?: string;
     name: string;
+    erro: boolean;
 }
 
-export const Input = (({ type, register, label, icon, name }: Props) => {
+export const Input = (({ type, register, label, icon, name, erro }: Props) => {
     const [value, setValue] = useState("");
+
+    let classes: string = "";
+
+    if(value){
+        classes += " has-value";
+    }
+
+    if(erro){
+        classes += " invalid";
+    }
 
     return (
         <div className="textbox">
@@ -19,7 +30,7 @@ export const Input = (({ type, register, label, icon, name }: Props) => {
                 type={type}
                 {...register(name, { required: true })}
                 onChange={(e) => setValue(e.target.value)}
-                className={value ? 'has-value' : ''} />
+                className={classes}/>
             <span
                 className='material-symbols-outlined'>
                 {icon}

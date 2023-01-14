@@ -40,11 +40,37 @@
 }
 
 .textbox input:focus {
-    border-color: #700B97;
+    border-color: #3E065F;
 }
 
-.textbox > :is(input:focus, input.has-value)~label {
+.textbox> :is(input:focus, input.has-value)~label {
     translate: -51px -40px;
     scale: 0.875;
     color: #f9f9f9;
+}
+
+input {
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: text !important;
+}
+
+.invalid{
+    animation: shake 0.1635s 0s 3;
+    border-color: red !important;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        translate: 0;
+    }
+
+    25% {
+        translate: 8px 0;
+    }
+
+    75% {
+        translate: -8px 0;
+    }
 }
