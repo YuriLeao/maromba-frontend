@@ -1,0 +1,297 @@
+.contents {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.menu {
+    width: 250px;
+    height: 100%;
+}
+
+.frame {
+    width: calc( 100% - 250px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 250px;
+    height: 100%;
+    padding: 40px 10px 30px 10px;
+    background: #161616;
+    box-shadow: rgb(0 0 0 / 50%) 10px 10px 20px 0px, rgb(0 0 0 / 50%) 6px 6px 6px;
+    transition: 0.3s;
+    border-radius: 0px 22px 22px 0px;
+}
+
+.sidebar-header {
+    width: 100%;
+    margin-bottom: 20px;
+    display: grid;
+}
+
+.profile {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.username {
+    margin: 0;
+    font-weight: 500px;
+}
+
+.ml14 {
+    margin-left: 14px;
+}
+
+.logo-icon {
+    display: none;
+    font-size: 28px;
+    height: 35px;
+    width: 51px;
+    text-align: center;
+}
+
+.logo-img {
+    margin-left: 14px;
+    height: 32px;
+}
+
+.sidebar button {
+    height: 60px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.sidebar button>span {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    padding: 0 12px;
+    border-radius: 24px;
+    line-height: 1;
+}
+
+.widthMenu {
+    width: 50px !important;
+}
+
+.sidebar button:hover>span {
+    background: #2d2d2d;
+}
+
+.sidebar button:hover>span :is(i, img) {
+    scale: 1.10;
+}
+
+.sidebar button>span>span {
+    transition: 0.3s;
+}
+
+.openCloseMenu {
+    width: 100% !important;
+}
+
+.openCloseMenu .logo-img {
+    display: none;
+}
+
+.openCloseMenu .ml14 {
+    display: none;
+}
+
+.openCloseMenu .logo-icon {
+    display: block;
+}
+
+.openCloseMenu button>span {
+    width: 50px !important;
+}
+
+.openCloseMenu button>span>span {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.openCloseMenu .profile {
+    margin-bottom: 0px;
+}
+
+.openCloseMenu .avatar {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 0;
+}
+
+.openCloseMenu .username {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.openCloseMenu .menu {
+    width: 75px;
+    height: 100%;
+}
+
+.openCloseMenu .frame {
+    width: calc( 100% - 75px);
+}
+
+.openCloseMenu .sidebar {
+    width: 72px;
+}
+
+@media (width < 1050px) {
+
+    .menu {
+        width: 75px;
+        height: 100%;
+    }
+
+    .frame {
+        width: calc( 100% - 75px);
+    }
+
+    .logo-img {
+        display: none;
+    }
+
+    .ml14 {
+        display: none;
+    }
+
+    .logo-icon {
+        display: block;
+    }
+
+    .sidebar {
+        width: 72px;
+    }
+
+    .sidebar button>span {
+        width: 50px;
+    }
+
+    .sidebar button>span>span {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .profile {
+        margin-bottom: 0px;
+        height: auto;
+    }
+
+    .avatar {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 0;
+    }
+
+    .username {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .openCloseMenu .sidebar {
+        width: 250px;
+        z-index: 9999;
+    }
+
+    .openCloseMenu .menu {
+        width: 75px;
+        height: 100%;
+    }
+
+    .openCloseMenu .logo-img {
+        display: block;
+    }
+
+    .openCloseMenu .ml14 {
+        display: block;
+    }
+
+    .openCloseMenu .logo-icon {
+        display: none;
+    }
+
+    .openCloseMenu .widthMenu {
+        width: 50px !important;
+    }
+
+    .openCloseMenu button>span {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 48px;
+        padding: 0 12px;
+        border-radius: 24px;
+        line-height: 1;
+        width: 230px !important;
+    }
+
+    .openCloseMenu button>span>span {
+        opacity: 1;
+        visibility: visible;
+        transition: 0.3s;
+    }
+
+    .openCloseMenu .avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .openCloseMenu .username {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.sidebar button i {
+    position: relative;
+    font-size: 28px;
+    transition: 0.2s;
+}
+
+.sidebar button img {
+    width: 28px;
+    height: 28px;
+    transition: 0.2s;
+}
+
+.sidebar button span {
+    font-size: 17px;
+}
+
+.sidebar>nav {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sidebar>nav button:last-child {
+    margin-top: auto;
+}
