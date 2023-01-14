@@ -20,7 +20,7 @@ export function Login() {
 
             await auth.authenticate(form.emailInput, form.senhaInput);
 
-            navigate("/inicial");
+            navigate("/menu");
         } catch (error) {
             setErrorApi(error as string);
             if (snackbarRef.current) {
@@ -41,23 +41,21 @@ export function Login() {
                     register={register}
                     type='email'
                     label='Email'
-                    icon='mail' />
-                {errors.emailInput &&
-                    <span style={{ color: "red" }}>
-                        Campo de e-mail obrigatório.
-                    </span>}
+                    icon='mail'
+                    erro={errors.emailInput ? true : false} />
                 <Input
                     name='senhaInput'
                     register={register}
                     type='password'
                     label='Senha'
-                    icon='lock' />
-                {errors.senhaInput &&
-                    <span style={{ color: "red" }}
-                    >Campo de senha obrigatório.
-                    </span>}
+                    icon='lock'
+                    erro={errors.senhaInput ? true : false} />
                 <button
                     type="submit">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                     LOGIN
                 </button>
                 <a
