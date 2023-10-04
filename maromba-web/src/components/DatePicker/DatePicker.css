@@ -1,0 +1,148 @@
+.databox {
+    width: 100%;
+    position: relative;
+}
+
+.databox label {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    translate: 0 -50%;
+    color: #f9f9f9;
+}
+
+.databox input {
+    width: 100%;
+    height: 60px;
+    outline: none;
+    padding: 0;
+    font-family: inherit;
+    border: 0;
+    font-size: 18px;
+    padding: 0 0 0 5px !important;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    border-bottom: 2px solid #f9f9f9;
+    border-radius: 0px;
+}
+
+
+.databox input:focus {
+    border-color: #3E065F;
+}
+
+input {
+    -webkit-text-fill-color: white;
+    -webkit-background-clip: text !important;
+}
+
+.focusLabel {
+    translate: -10px -40px !important;
+    scale: 0.875 !important;
+    color: #f9f9f9 !important;
+}
+
+.invalid {
+    animation: shake 0.1635s 0s 3;
+    border-color: red !important;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        translate: 0;
+    }
+
+    25% {
+        translate: 8px 0;
+    }
+
+    75% {
+        translate: -8px 0;
+    }
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container .react-datepicker__calendar-icon {
+    padding: 0px !important;
+    margin-top: 20px;
+    right: 1px;
+    fill: white;
+}
+
+.react-datepicker__header {
+    background-color: #161616 !important;
+    color: white !important;
+    border-radius: 22px;
+    border-top-left-radius: 22px !important;
+    border-top-right-radius: 22px !important;
+    border-bottom: 0px !important;
+}
+
+.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+    color: white !important;
+}
+
+.react-datepicker__month-container {
+    background-color: #161616 !important;
+    border-radius: 22px;
+    border: 1px solid white !important;
+}
+
+.react-datepicker {
+    font-family: "Sora" !important;
+    border: 0px !important;
+    border-radius: 22px !important;
+    background-color: transparent !important;
+}
+
+.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before {
+    border-top-color: #3E065F !important;
+    display: none;
+}
+
+.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::after {
+    border-top-color: #3E065F !important;
+    display: none;
+}
+
+.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+    color: white !important;
+}
+
+.react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover, .react-datepicker__year-text:hover {
+    background-color: #8E05C2 !important;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range, .react-datepicker__year-text--selected, .react-datepicker__year-text--in-selecting-range, .react-datepicker__year-text--in-range {
+    background-color: #8E05C2 !important;
+}
+
+.react-datepicker__navigation--years-upcoming {
+    background: url(/src/assets/img/seta-cima.png) 6px 11px no-repeat !important;
+    background-size: 18px !important;
+}
+
+.react-datepicker__navigation--years-previous {
+    background: url(/src/assets/img/seta-baixo.png) 6px 11px no-repeat !important;
+    background-size: 18px !important;
+    top: -2px !important;
+}
+
+.react-datepicker__triangle {
+    transform: translate3d(12px, 0px, 0px) !important;
+}
+
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
+    background-color: #8E05C2 !important;
+}
+
+.react-datepicker__year-dropdown {
+    background-color: #161616 !important;
+    border: 0px;
+}
