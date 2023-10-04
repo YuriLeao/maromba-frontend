@@ -1,56 +1,97 @@
 import './User.css'
-import { Input } from '../../components/Input/Input'
-import { useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider/useAuth';
-import { SnackBar } from '../../components/Snackbar/Snackbar';
+import { Input } from '../../components/Input/Input';
+import { Select } from '../../components/Select/Select';
+import { useForm } from 'react-hook-form';
+import { cpfMask, phoneMask } from '../../Masks/mask';
+import { DatePicker } from '../../components/DatePicker/DatePicker';
 
 export function User() {
     const navigate = useNavigate();
     const auth = useAuth();
-    const [errorApi, setErrorApi] = useState<string>("");
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const snackbarRef = useRef(null);
+    const { control, register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
 
     const onSubmit = async (form: any) => {
         try {
-
-            await auth.authenticate(form.emailInput, form.senhaInput);
-
-            navigate("/inicial");
+            console.log(form)
         } catch (error) {
-            setErrorApi(error as string);
-            if (snackbarRef.current) {
-                snackbarRef.current.show();
-            }
+
         }
     }
+
+    const onChange = ((e: any, name: string, type: string) => {
+
+        var value = e.target.value;
+        if (type === 'phone') {
+            value = phoneMask(value);
+        } else if (type === 'cpf') {
+            value = cpfMask(value);
+        }
+
+        setValue(name, value);
+    });
+
+    const genders = [
+        { id: 'M', name: 'Monstro' },
+        { id: 'F', name: 'Monstra' },
+        { id: 'O', name: 'Saiu de jaula' },
+    ];
 
     return (
         <>
             <div className="panel">
-                <h1>MAROMBAPP</h1>
-                <h3>Login</h3>
+                <h1>Seu perfil</h1>
                 <form
-                    className="login-form"
+                    className="user-form"
                     onSubmit={handleSubmit(onSubmit)}>
+                    <Input
+                        name='nameInput'
+                        register={register}
+                        type='input'
+                        label='Nome'
+                        onChange={onChange}
+                        required={true}
+                        erro={errors.nameInput ? true : false} />
                     <Input
                         name='emailInput'
                         register={register}
                         type='email'
                         label='Email'
-                        icon='mail'
+                        onChange={onChange}
+                        required={true}
                         erro={errors.emailInput ? true : false} />
                     <Input
-                        name='senhaInput'
+                        name='phoneInput'
                         register={register}
-                        type='password'
-                        label='Senha'
-                        icon='lock'
-                        erro={errors.senhaInput ? true : false} />
+                        type='phone'
+                        label='Celular'
+                        onChange={onChange}
+                        required={true}
+                        erro={errors.phoneInput ? true : false} />
+                    <Select
+                        name='genderInput'
+                        register={register}
+                        label='Gênero'
+                        list={genders}
+                        required={true}
+                        erro={errors.genderInput ? true : false} />
+                    <Input
+                        name='weightInput'
+                        register={register}
+                        type='number'
+                        label='Peso'
+                        onChange={onChange}
+                        required={true}
+                        erro={errors.weightInput ? true : false} />
+                    <DatePicker
+                        name='birthDatePicker'
+                        control={control}
+                        label='Data de nascimento'
+                        required={true}
+                        erro={errors.birthDatePicker ? true : false} />
+
                     <button
                         type="submit">
                         <span></span>
@@ -59,15 +100,7 @@ export function User() {
                         <span></span>
                         LOGIN
                     </button>
-                    <a
-                        href="https://website.com">
-                        Forgot your credentials?
-                    </a>
                 </form>
-                <SnackBar
-                    ref={snackbarRef}
-                    message={errorApi}
-                    type="error" />
             </div>
         </>
     )

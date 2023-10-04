@@ -18,7 +18,7 @@ export function Login() {
     const onSubmit = async (form: any) => {
         try {
 
-            await auth.authenticate(form.emailInput, form.senhaInput);
+            await auth.authenticate(form.emailInput, form.passwordInput);
 
             navigate("/menu");
         } catch (error) {
@@ -42,14 +42,16 @@ export function Login() {
                     type='email'
                     label='Email'
                     icon='mail'
+                    required={true}
                     erro={errors.emailInput ? true : false} />
                 <Input
-                    name='senhaInput'
+                    name='passwordInput'
                     register={register}
                     type='password'
                     label='Senha'
                     icon='lock'
-                    erro={errors.senhaInput ? true : false} />
+                    required={true}
+                    erro={errors.passwordInput ? true : false} />
                 <button
                     type="submit">
                     <span></span>
