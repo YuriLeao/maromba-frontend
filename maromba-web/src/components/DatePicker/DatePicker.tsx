@@ -60,7 +60,7 @@ export const DatePicker = (({ control, label, name, erro, required }: Props) => 
             <Controller
                 control={control}
                 name={name}
-                rules={{ required: true }}
+                rules={{ required: required }}
                 render={({ field }) => (
                     <>
                         <ReactDatePicker

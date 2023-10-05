@@ -10,6 +10,7 @@
   background: #161616;
   text-align: center;
   box-shadow: rgb(0 0 0 / 50%) 20px 20px 20px 0px, rgb(0 0 0 / 50%) 0px 6px 6px;
+  opacity: 0.6;
 }
 
 @media (width >=450px) {
@@ -44,119 +45,4 @@
   font-size: 16px;
   text-align: left;
   text-decoration: none;
-}
-
-.login-form button {
-  position: relative;
-  display: inline-block;
-  padding: 10px 20px;
-  color: #700B97;
-  text-decoration: none;
-  text-transform: uppercase;
-  overflow: hidden;
-  transition: 0.5s;
-  margin-top: 40px;
-  background-color: transparent;
-  width: 100%;
-  height: 60px;
-  outline: none;
-  font-family: inherit;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 0;
-  font-weight: 600;
-  letter-spacing: 2px;
-}
-
-.login-form button:hover {
-  background: linear-gradient(135deg, #000000, #3E065F, #3E065F, #3E065F, #700B97, #8E05C2);
-  background-size: 300% 300%;
-  animation: colors 10s ease infinite;
-  color: #fff;
-  border-radius: 5px;
-}
-
-.login-form button span {
-  position: absolute;
-  display: block;
-}
-
-.login-form button span:nth-child(1) {
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3E065F);
-  animation: animacaoBotao1 1s linear infinite;
-}
-
-@keyframes animacaoBotao1 {
-  0% {
-    left: -100%;
-  }
-  50%,
-  100% {
-    left: 100%;
-  }
-}
-
-.login-form button span:nth-child(2) {
-  top: -100%;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, #3E065F);
-  animation: animacaoBotao2 1s linear infinite;
-  animation-delay: 0.25s;
-}
-
-@keyframes animacaoBotao2 {
-  0% {
-    top: -100%;
-  }
-  50%,
-  100% {
-    top: 100%;
-  }
-}
-
-.login-form button span:nth-child(3) {
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(270deg, transparent, #3E065F);
-  animation: animacaoBotao3 1s linear infinite;
-  animation-delay: 0.5s;
-}
-
-@keyframes animacaoBotao3 {
-  0% {
-    right: -100%;
-  }
-  50%,
-  100% {
-    right: 100%;
-  }
-}
-
-.login-form button span:nth-child(4) {
-  bottom: -100%;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(360deg, transparent, #3E065F);
-  animation: animacaoBotao4 1s linear infinite;
-  animation-delay: 0.75s;
-}
-
-@keyframes animacaoBotao4 {
-  0% {
-    bottom: -100%;
-  }
-  50%,
-  100% {
-    bottom: 100%;
-  }
 }

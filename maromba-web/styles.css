@@ -13,7 +13,6 @@ body {
   display: grid;
   place-items: center;
   margin: 0;
-  padding: 0 24px;
   background: linear-gradient(135deg, #000000, #3E065F, #3E065F, #3E065F, #700B97, #8E05C2);
   background-size: 300% 300%;
   animation: colors 10s ease infinite;
@@ -31,7 +30,7 @@ body {
   }
 
   66% {
-    background-position: 66% 100%;
+    background-position: 66% 98%;
   }
 
   100% {
@@ -55,3 +54,133 @@ body {
   width: 100%;
   height: 100%; 
 }
+
+.confirmDiv {
+  width: 100%;
+  position: relative;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.confirmButton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 10px;
+  background-color: transparent;
+  width: auto !important;
+  height: 60px;
+  outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 0;
+  font-weight: 600;
+  letter-spacing: 2px;
+  box-shadow: rgb(0 0 0 / 50%) 20px 20px 20px 0px, rgb(0 0 0 / 50%) 0px 6px 6px;
+}
+
+.confirmButton:hover {
+  background: linear-gradient(135deg, #000000, #3E065F, #3E065F, #3E065F, #700B97, #8E05C2);
+  background-size: 300% 300%;
+  animation: colors 10s ease infinite;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.confirmButton span {
+  position: absolute;
+  display: block;
+}
+
+/**
+.confirmButton span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3E065F);
+  animation: animacaoBotao1 1s linear infinite;
+}
+
+@keyframes animacaoBotao1 {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+.confirmButton span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #3E065F);
+  animation: animacaoBotao2 1s linear infinite;
+  animation-delay: 0.25s;
+}
+
+@keyframes animacaoBotao2 {
+  0% {
+    top: -100%;
+  }
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+.confirmButton span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #3E065F);
+  animation: animacaoBotao3 1s linear infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes animacaoBotao3 {
+  0% {
+    right: -100%;
+  }
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+.confirmButton span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #3E065F);
+  animation: animacaoBotao4 1s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes animacaoBotao4 {
+  0% {
+    bottom: -100%;
+  }
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}**/

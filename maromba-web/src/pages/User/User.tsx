@@ -39,13 +39,20 @@ export function User() {
         { id: 'O', name: 'Saiu de jaula' },
     ];
 
+    const authorizations = [
+        { id: 'admin', name: 'Admin' },
+        { id: 'empresa', name: 'Empresa' },
+        { id: 'professor', name: 'Professor' },
+        { id: 'aluno', name: 'Aluno' },
+    ];
+
     return (
         <>
             <div className="panel">
-                <h1>Seu perfil</h1>
                 <form
                     className="user-form"
                     onSubmit={handleSubmit(onSubmit)}>
+                    <h1 className='mt20'>Crie seu usuário</h1>
                     <Input
                         name='nameInput'
                         register={register}
@@ -91,14 +98,22 @@ export function User() {
                         label='Data de nascimento'
                         required={true}
                         erro={errors.birthDatePicker ? true : false} />
+                    <Select
+                        name='authorizationInput'
+                        register={register}
+                        label='Tipo de Usuário'
+                        list={authorizations}
+                        required={true}
+                        erro={errors.authorizationInput ? true : false} />
+                    
 
-                    <button
-                        type="submit">
+                    <button 
+                        type="submit" className='confirmButton mb20'>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
-                        LOGIN
+                        Cadastrar
                     </button>
                 </form>
             </div>
