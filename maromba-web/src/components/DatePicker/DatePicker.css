@@ -19,7 +19,7 @@
     font-family: inherit;
     border: 0;
     font-size: 18px;
-    padding: 0 0 0 5px !important;
+    padding: 0 0 0 4px !important;
     border-radius: 8px;
     background: transparent;
     color: inherit;
@@ -76,7 +76,7 @@ input {
 }
 
 .react-datepicker__header {
-    background-color: #161616 !important;
+    background-color: #3E065F !important;
     color: white !important;
     border-radius: 22px;
     border-top-left-radius: 22px !important;
@@ -89,7 +89,7 @@ input {
 }
 
 .react-datepicker__month-container {
-    background-color: #161616 !important;
+    background-color: #3E065F !important;
     border-radius: 22px;
     border: 1px solid white !important;
 }

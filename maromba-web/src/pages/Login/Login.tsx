@@ -53,12 +53,8 @@ export function Login() {
                     required={true}
                     erro={errors.passwordInput ? true : false} />
                 <button
-                    type="submit" className='confirmButton'>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    LOGIN
+                    type="submit" className='mainButton'>
+                    Entrar
                 </button>
                 <a
                     href="https://website.com">

@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  letter-spacing: 1px;
+  font-family: "Sora";
 }
 
 html,
@@ -13,34 +15,52 @@ body {
   display: grid;
   place-items: center;
   margin: 0;
-  background: linear-gradient(135deg, #000000, #3E065F, #3E065F, #3E065F, #700B97, #8E05C2);
+  background: linear-gradient(135deg, #161616, #3E065F, #700B97, #8E05C2);
   background-size: 300% 300%;
   animation: colors 10s ease infinite;
   color: #f9f9f9;
-  font-family: "Sora";
+  
+}
+
+h1 {
+  margin-block-start: 0px;
 }
 
 @keyframes colors {
   0% {
-    background-position: 0% 33%;
+    background-position: 15% 50%;
   }
 
-  33% {
-    background-position: 33% 66%;
-  }
-
-  66% {
-    background-position: 66% 98%;
+  50% {
+    background-position: 50% 90%;
   }
 
   100% {
-    background-position: 0% 33%;
+    background-position: 15% 50%;
   }
 }
 
-@media (width >= 500px) {
+@media (width <= 700px) {
   body {
-    padding: 0;
+    h1 {
+     font-size: 24px !important;
+    }
+
+    h2 {
+      font-size: 27px !important;
+    }
+
+    h3 {
+      font-size: 22.5px !important;
+    }
+
+    input {
+      font-size: 16px !important;
+    }
+
+    label {
+      font-size: 13.3px !important;
+    }
   }
 }
 
@@ -68,119 +88,37 @@ body {
   margin-bottom: 20px;
 }
 
-.confirmButton {
-  position: relative;
-  display: inline-block;
+.mainButton {
   padding: 10px 20px;
   color: white;
-  text-decoration: none;
-  text-transform: uppercase;
-  overflow: hidden;
-  transition: 0.5s;
   margin-top: 10px;
-  background-color: transparent;
+  background-color:#700B97;
   width: auto !important;
-  height: 60px;
-  outline: none;
-  font-family: inherit;
+  height: auto;
   font-size: 16px;
   border-radius: 8px;
   cursor: pointer;
   border: 0;
   font-weight: 600;
-  letter-spacing: 2px;
-  box-shadow: rgb(0 0 0 / 50%) 20px 20px 20px 0px, rgb(0 0 0 / 50%) 0px 6px 6px;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
 }
 
-.confirmButton:hover {
-  background: linear-gradient(135deg, #000000, #3E065F, #3E065F, #3E065F, #700B97, #8E05C2);
-  background-size: 300% 300%;
-  animation: colors 10s ease infinite;
-  color: #fff;
-  border-radius: 5px;
+.textbox {
+  width: 72%;
+  position: relative;
 }
 
-.confirmButton span {
+.textbox span {
   position: absolute;
-  display: block;
+  top: 50%;
+  left: 16px;
+  translate: 0 -50%;
+  color: #f9f9f9;
 }
 
-/**
-.confirmButton span:nth-child(1) {
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3E065F);
-  animation: animacaoBotao1 1s linear infinite;
+.textbox label {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  color: #f9f9f9;
 }
-
-@keyframes animacaoBotao1 {
-  0% {
-    left: -100%;
-  }
-  50%,
-  100% {
-    left: 100%;
-  }
-}
-
-.confirmButton span:nth-child(2) {
-  top: -100%;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, #3E065F);
-  animation: animacaoBotao2 1s linear infinite;
-  animation-delay: 0.25s;
-}
-
-@keyframes animacaoBotao2 {
-  0% {
-    top: -100%;
-  }
-  50%,
-  100% {
-    top: 100%;
-  }
-}
-
-.confirmButton span:nth-child(3) {
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(270deg, transparent, #3E065F);
-  animation: animacaoBotao3 1s linear infinite;
-  animation-delay: 0.5s;
-}
-
-@keyframes animacaoBotao3 {
-  0% {
-    right: -100%;
-  }
-  50%,
-  100% {
-    right: 100%;
-  }
-}
-
-.confirmButton span:nth-child(4) {
-  bottom: -100%;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: linear-gradient(360deg, transparent, #3E065F);
-  animation: animacaoBotao4 1s linear infinite;
-  animation-delay: 0.75s;
-}
-
-@keyframes animacaoBotao4 {
-  0% {
-    bottom: -100%;
-  }
-  50%,
-  100% {
-    bottom: 100%;
-  }
-}**/

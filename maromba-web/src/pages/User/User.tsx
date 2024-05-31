@@ -49,6 +49,7 @@ export function User() {
     return (
         <>
             <div className="panel">
+                <div className="panelOpacit" />
                 <form
                     className="user-form"
                     onSubmit={handleSubmit(onSubmit)}>
@@ -108,11 +109,7 @@ export function User() {
                     
 
                     <button 
-                        type="submit" className='confirmButton mb20'>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        type="submit" className='mainButton mb20'>
                         Cadastrar
                     </button>
                 </form>

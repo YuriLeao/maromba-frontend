@@ -9,8 +9,7 @@
   border-radius: 22px;
   background: #161616;
   text-align: center;
-  box-shadow: rgb(0 0 0 / 50%) 20px 20px 20px 0px, rgb(0 0 0 / 50%) 0px 6px 6px;
-  opacity: 0.6;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
 }
 
 @media (width >=450px) {

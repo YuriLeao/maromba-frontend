@@ -31,7 +31,7 @@
     box-shadow: rgb(0 0 0 / 50%) 10px 10px 20px 0px, rgb(0 0 0 / 50%) 6px 6px 6px;
     transition: 0.3s;
     border-radius: 0px 22px 22px 0px;
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 .sidebar-header {
@@ -165,7 +165,7 @@
     width: 72px;
 }
 
-@media (width < 1050px) {
+@media (width <= 700px) {
 
     .menu {
         width: 75px;
@@ -223,11 +223,6 @@
         z-index: 9999;
     }
 
-    .openCloseMenu .menu {
-        width: 75px;
-        height: 100%;
-    }
-
     .openCloseMenu .logo-img {
         display: block;
     }
@@ -270,6 +265,15 @@
         opacity: 1;
         visibility: visible;
     }
+
+    .openCloseMenu .frame {
+        filter: blur(1.0rem);
+    }
+
+    .openCloseMenu .sidebar {
+        opacity: 0.8;
+    }
+    
 }
 
 .sidebar button i {
