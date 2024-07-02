@@ -6,6 +6,8 @@ import { Select } from '../../components/Select/Select';
 import { useForm } from 'react-hook-form';
 import { cpfMask, phoneMask } from '../../Masks/mask';
 import { DatePicker } from '../../components/DatePicker/DatePicker';
+import { AutoComplete } from '../../components/AutoComplete/AutoComplete';
+import { useRef } from 'react';
 
 export function User() {
     const navigate = useNavigate();
@@ -46,14 +48,26 @@ export function User() {
         { id: 'aluno', name: 'Aluno' },
     ];
 
+    const companys = [
+        { id: '1', name: 'P.H.D Sports' },
+        { id: '9', name: 'Paulo Sports' },
+        { id: '2', name: 'Iron Berg' },
+        { id: '8', name: 'Iron Ferro' },
+        { id: '3', name: 'Overall' },
+        { id: '6', name: 'Overtudo' },
+        { id: '7', name: 'Onada' },
+        { id: '4', name: 'War gym' },
+        { id: '5', name: 'Wally gym' },
+        { id: '10', name: 'Wonka gym' },
+    ];
+
     return (
         <>
             <div className="panel">
-                <div className="panelOpacit" />
                 <form
                     className="user-form"
                     onSubmit={handleSubmit(onSubmit)}>
-                    <h1 className='mt20'>Crie seu usuário</h1>
+                    <h1>Cadastrar novo usuário</h1>
                     <Input
                         name='nameInput'
                         register={register}
@@ -106,10 +120,18 @@ export function User() {
                         list={authorizations}
                         required={true}
                         erro={errors.authorizationInput ? true : false} />
-                    
+                    <AutoComplete
+                        name='companyAutoComplete'
+                        register={register}
+                        label='Empresa'
+                        list={companys}
+                        onChange={onChange}
+                        required={true}
+                        icon='search'
+                        erro={errors.companyAutoComplete ? true : false} />
 
-                    <button 
-                        type="submit" className='mainButton mb20'>
+                    <button
+                        type="submit" className='mainButton'>
                         Cadastrar
                     </button>
                 </form>
