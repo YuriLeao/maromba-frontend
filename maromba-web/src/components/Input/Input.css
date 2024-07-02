@@ -1,6 +1,6 @@
 .textbox input {
     width: 100%;
-    height: 60px;
+    height: 45px;
     background: transparent;
     border: 0;
     font-size: 18px;
@@ -9,6 +9,7 @@
     border-bottom: 2px solid #f9f9f9;
     border-radius: 0px;
     outline: none;
+    margin-top: 15px;
 }
 
 .textbox input:focus {
@@ -16,13 +17,13 @@
 }
 
 .textbox> :is(input:focus, input.has-value)~label {
-    translate: -51px -40px;
+    translate: -45px -30px;
     scale: 0.875;
     color: #f9f9f9;
 }
 
 .unIncon> :is(input:focus, input.has-value)~label {
-    translate: -3px -40px;
+    translate: -3px -30px;
     scale: 0.875;
     color: #f9f9f9;
 }

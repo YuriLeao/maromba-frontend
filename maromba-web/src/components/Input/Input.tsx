@@ -44,7 +44,7 @@ export const Input = (({ type, register, label, icon, name, erro, onChange,requi
                 step="any"
                 {...register(name, paramRegister)}
                 onChange={(e) => { setValue(e.target.value); onChange(e, name, type)}}
-                style={(icon == undefined) ? { padding: '0px 0px 0px 5px' } : { padding: '0px 0px 0px 50px' }}
+                style={(icon == undefined) ? { padding: '0px 0px 0px 5px' } : { padding: '0px 0px 0px 40px' }}
                 className={classes} />
             <span style={(icon == undefined) ? { display: 'none' } : { display: 'inline-block' }}
                 className='material-symbols-outlined'>
@@ -52,7 +52,7 @@ export const Input = (({ type, register, label, icon, name, erro, onChange,requi
             </span>
             <label
                 htmlFor={name}
-                style={(icon == undefined) ? { left: '0px' } : { left: '50px' }}
+                style={(icon == undefined) ? { left: '0px' } : { left: '40px' }}
                 className={value ? 'roxo' : ''}>
                 {label}
             </label>
