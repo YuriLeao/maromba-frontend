@@ -32,6 +32,10 @@
     border-radius: 0px;
     outline: none;
     margin-top: 15px;
+    -webkit-transition: border 400ms ease-out;
+    -moz-transition: border 400ms ease-out;
+    -o-transition: border 400ms ease-out;
+    transition: border 400ms ease-out;
 }
 
 .textbox input:focus {
