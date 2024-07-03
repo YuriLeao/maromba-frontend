@@ -146,7 +146,7 @@ export const AutoComplete = (({ register, label, icon, name, erro, onChange, req
                 step="any"
                 {...register(name, paramRegister)}
                 onChange={handleFilterChange}
-                style={(icon == undefined) ? { padding: '0px 0px 0px 5px' } : { padding: '0px 0px 0px 40px' }}
+                style={(icon == undefined) ? { padding: '0px 0px 0px 5px' } : { padding: '0px 30px 0px 40px' }}
                 className={classes}
                 value={inputValue}
                 ref={inputRef}

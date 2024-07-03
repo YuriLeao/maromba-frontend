@@ -111,7 +111,7 @@ export const Select = (({ register, label, name, erro, required, list }: Props) 
                 type="text"
                 step="any"
                 {...register(name, paramRegister)}
-                style={{ padding: '0px 0px 0px 5px' }}
+                style={{ padding: '0px 30px 0px 5px' }}
                 className={classes}
                 value={inputValue}
                 ref={inputRef}
