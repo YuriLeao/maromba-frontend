@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import "./Select.css";
+import "../ComponentsStyle.css";
 
 interface Props {
     register: any;
     label: string;
     name: string;
-    erro: boolean;
+    error: boolean;
     list: Item[];
     required?: boolean;
 }
@@ -16,27 +17,11 @@ interface Item {
     name: string
 }
 
-export const Select = (({ register, label, name, erro, required, list }: Props) => {
+export const Select = (({ register, label, name, error, required, list }: Props) => {
     const [inputValue, setInputValue] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const inputRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
-
-    let classes: string = "select";
-    let divClasses: string = "textbox unIncon";
-    let paramRegister = { required: false };
-
-    if (required == true) {
-        paramRegister.required = true;
-    }
-
-    if (inputValue) {
-        classes += " has-value";
-    }
-
-    if (erro) {
-        classes += " invalid";
-    }
 
     const handleSelectClick = (e: any) => {
         e.stopPropagation();
@@ -104,15 +89,15 @@ export const Select = (({ register, label, name, erro, required, list }: Props) 
     }, [isOpen]);
 
     return (
-        <div className={divClasses}>
+        <div className='textbox unIcon'>
             <input
                 id={name}
                 name={name}
                 type="text"
                 step="any"
-                {...register(name, paramRegister)}
+                {...register(name, (required == true ? { required: true } : { required: false }))}
                 style={{ padding: '0px 30px 0px 5px' }}
-                className={classes}
+                className={'select' + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
                 value={inputValue}
                 ref={inputRef}
                 onClick={handleSelectClick} />
@@ -122,8 +107,7 @@ export const Select = (({ register, label, name, erro, required, list }: Props) 
                 className={'select'}>
                 {label}
             </label>
-            <span style={{ display: 'inline-block', right: '-1%', left: 'unset', cursor: 'pointer' }}
-                className='material-symbols-outlined'>
+            <span className='material-symbols-outlined rightIcon' >
                 {"keyboard_arrow_down"}
             </span>
 

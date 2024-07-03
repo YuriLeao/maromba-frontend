@@ -4,6 +4,7 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Controller } from "react-hook-form";
+import "../ComponentsStyle.css";
 
 registerLocale('ptBR', ptBR);
 
@@ -11,27 +12,12 @@ interface Props {
     control: any;
     label: string;
     name: string;
-    erro: boolean;
+    error: boolean;
     required?: boolean;
 }
 
-export const DatePicker = (({ control, label, name, erro, required }: Props) => {
+export const DatePicker = (({ control, label, name, error, required }: Props) => {
     const [value, setValue] = useState(null);
-
-    let classes: string = "";
-    let divClasses: string = "databox";
-
-    let classesLabel: string = "";
-
-
-    if (value) {
-        classes += " has-value";
-        classesLabel = "focusLabel";
-    }
-
-    if (erro) {
-        classes += " invalid";
-    }
 
     const onFocus = () => {
         const elemento = document.getElementById(name + "Label");;
@@ -57,7 +43,7 @@ export const DatePicker = (({ control, label, name, erro, required }: Props) => 
     };
 
     return (
-        <div className={divClasses}>
+        <div className={'textbox'}>
             <Controller
                 control={control}
                 name={name}
@@ -77,13 +63,12 @@ export const DatePicker = (({ control, label, name, erro, required }: Props) => 
                             onChange={(e: any) => {
                                 field.onChange(e);
                             }}
-                            className={classes} />
-
+                            className={(value ? ' has-value' : '') + (error ? ' invalid' : '')} />
                         <label
                             htmlFor={name}
                             id={name + "Label"}
                             style={{ left: '0px' }}
-                            className={classesLabel}>
+                            className={(value ? 'focusLabel' : '')}>
                             {label}
                         </label>
                     </>)}

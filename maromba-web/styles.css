@@ -52,14 +52,6 @@ h1 {
     h3 {
       font-size: 22.5px !important;
     }
-
-    input {
-      font-size: 16px !important;
-    }
-
-    label {
-      font-size: 13.3px !important;
-    }
   }
 }
 
@@ -118,33 +110,12 @@ h1 {
   background-color:#700B97;
   width: auto !important;
   height: auto;
-  font-size: 17px;
+  font-size: 18px;;
   border-radius: 8px;
   cursor: pointer;
   border: 0;
   font-weight: 600;
   box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
-}
-
-.textbox {
-  width: 72%;
-  position: relative;
-  height: 60px;
-}
-
-.textbox span {
-  position: absolute;
-  top: 50%;
-  left: 6px;
-  translate: 0 -40%;
-  color: #f9f9f9;
-}
-
-.textbox label {
-  position: absolute;
-  top: 50%;
-  translate: 0px -9px;
-  color: #f9f9f9;
 }
 
 ::-webkit-scrollbar {

@@ -28,7 +28,7 @@
   color: rgba(255, 255, 255, 0.38);
   margin: 0 0 30px;
   font-weight: 500;
-  font-size: 17px;
+  font-size: 18px;;
 }
 
 .login-form {
@@ -41,7 +41,7 @@
 
 .login-form a {
   color: #f9f9f9;
-  font-size: 17px;
+  font-size: 18px;;
   text-align: left;
   text-decoration: none;
 }

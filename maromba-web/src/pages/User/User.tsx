@@ -74,7 +74,7 @@ export function User() {
                         label='Nome'
                         onChange={onChange}
                         required={true}
-                        erro={errors.nameInput ? true : false} />
+                        error={errors.nameInput ? true : false} />
                     <Input
                         name='emailInput'
                         register={register}
@@ -82,7 +82,7 @@ export function User() {
                         label='Email'
                         onChange={onChange}
                         required={true}
-                        erro={errors.emailInput ? true : false} />
+                        error={errors.emailInput ? true : false} />
                     <Input
                         name='phoneInput'
                         register={register}
@@ -90,14 +90,14 @@ export function User() {
                         label='Celular'
                         onChange={onChange}
                         required={true}
-                        erro={errors.phoneInput ? true : false} />
+                        error={errors.phoneInput ? true : false} />
                     <Select
                         name='genderSelect'
                         register={register}
                         label='Gênero'
                         list={genders}
                         required={true}
-                        erro={errors.genderSelect ? true : false} />
+                        error={errors.genderSelect ? true : false} />
                     <Input
                         name='weightInput'
                         register={register}
@@ -105,20 +105,20 @@ export function User() {
                         label='Peso'
                         onChange={onChange}
                         required={true}
-                        erro={errors.weightInput ? true : false} />
+                        error={errors.weightInput ? true : false} />
                     <DatePicker
                         name='birthDatePicker'
                         control={control}
                         label='Data de nascimento'
                         required={true}
-                        erro={errors.birthDatePicker ? true : false} />
+                        error={errors.birthDatePicker ? true : false} />
                     <Select
                         name='authorizationInput'
                         register={register}
                         label='Tipo de Usuário'
                         list={authorizations}
                         required={true}
-                        erro={errors.authorizationInput ? true : false} />
+                        error={errors.authorizationInput ? true : false} />
                     <AutoComplete
                         name='companyAutoComplete'
                         register={register}
@@ -126,7 +126,7 @@ export function User() {
                         list={companys}
                         required={true}
                         icon='search'
-                        erro={errors.companyAutoComplete ? true : false} />
+                        error={errors.companyAutoComplete ? true : false} />
 
                     <button
                         type="submit" className='mainButton'>

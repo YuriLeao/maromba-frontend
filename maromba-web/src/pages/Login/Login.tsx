@@ -43,7 +43,7 @@ export function Login() {
                     label='Email'
                     icon='mail'
                     required={true}
-                    erro={errors.emailInput ? true : false} />
+                    error={errors.emailInput ? true : false} />
                 <Input
                     name='passwordInput'
                     register={register}
@@ -51,7 +51,7 @@ export function Login() {
                     label='Senha'
                     icon='lock'
                     required={true}
-                    erro={errors.passwordInput ? true : false} />
+                    error={errors.passwordInput ? true : false} />
                 <button
                     type="submit" className='mainButton'>
                     Entrar

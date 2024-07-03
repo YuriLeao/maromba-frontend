@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import "./AutoComplete.css";
+import "../ComponentsStyle.css";
 
 interface Props {
     register: any;
     label: string;
     icon?: string;
     name: string;
-    erro: boolean;
+    error: boolean;
     onChange?: any;
     list: Item[];
     required?: boolean;
@@ -18,32 +19,12 @@ interface Item {
     name: string
 }
 
-export const AutoComplete = (({ register, label, icon, name, erro, onChange, required, list }: Props) => {
+export const AutoComplete = (({ register, label, icon, name, error, onChange, required, list }: Props) => {
     const [inputValue, setInputValue] = useState("");
     const [filterSearch, setFilterSearch] = useState<Item[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const inputRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
-
-    let classes: string = "";
-    let divClasses: string = "textbox";
-    let paramRegister = { required: false };
-
-    if (required == true) {
-        paramRegister.required = true;
-    }
-
-    if (icon == undefined) {
-        divClasses += " unIncon";
-    }
-
-    if (inputValue) {
-        classes += " has-value";
-    }
-
-    if (erro) {
-        classes += " invalid";
-    }
 
     const handleFilterChange = (event: any) => {
         setInputValue(event.target.value);
@@ -138,16 +119,15 @@ export const AutoComplete = (({ register, label, icon, name, erro, onChange, req
     }, [isOpen]);
 
     return (
-        <div className={divClasses}>
+        <div className={'textbox' + (icon == undefined ? ' unIcon' : '')}>
             <input
                 id={name}
                 name={name}
                 type="input"
                 step="any"
-                {...register(name, paramRegister)}
+                {...register(name, (required == true ? { required: true } : { required: false }))}
                 onChange={handleFilterChange}
-                style={(icon == undefined) ? { padding: '0px 0px 0px 5px' } : { padding: '0px 30px 0px 40px' }}
-                className={classes}
+                className={(icon == undefined ? ' inputUnIcon' : ' inputIcon') + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
                 value={inputValue}
                 ref={inputRef}
                 onClick={handleSelectClick} />
@@ -157,13 +137,11 @@ export const AutoComplete = (({ register, label, icon, name, erro, onChange, req
             </span>
             <label
                 htmlFor={name}
-                style={(icon == undefined) ? { left: '0px' } : { left: '40px' }}
-                className={inputValue ? 'roxo' : ''}>
+                style={(icon == undefined) ? { left: '0px' } : { left: '40px' }}>
                 {label}
             </label>
             {inputValue !== "" ?
-                <span style={{ display: 'inline-block', right: '-0.5%', left: 'unset', cursor: 'pointer' }}
-                    className='material-symbols-outlined' onClick={() => clear()}>
+                <span className='material-symbols-outlined rightIcon' onClick={() => clear()}>
                     {"close"}
                 </span>
                 : ""}
