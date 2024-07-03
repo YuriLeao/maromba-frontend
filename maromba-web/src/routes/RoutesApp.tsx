@@ -3,8 +3,8 @@ import {
     Routes,
     Route
 } from "react-router-dom";
-import { ProtectedRoutes } from "../components/ProtectedRoute";
-import { AuthProvider } from "../contexts/AuthProvider";
+import { ProtectedRoutes } from "./ProtectedRoute";
+import { AuthProvider } from "../contexts/AuthProvider/AuthProvider";
 import { Login } from "../pages/Login/Login";
 import { Menu } from "../pages/Menu/Menu";
 import { User } from "../pages/User/User";

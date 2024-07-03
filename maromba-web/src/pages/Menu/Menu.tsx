@@ -1,6 +1,6 @@
 import "./Menu.css";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthProvider/useAuth";
+import { useAuth } from "../../contexts/AuthProvider/UseAuth";
 import { useState } from "react";
 
 export function Menu() {

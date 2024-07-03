@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { getUserLocalStorage } from "../../contexts/AuthProvider/util";
+import { getUserLocalStorage } from "../contexts/AuthProvider/util";
 
 
 export const ProtectedRoutes = ({ children }: { children: JSX.Element }) => {

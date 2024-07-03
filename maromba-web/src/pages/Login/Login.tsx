@@ -3,7 +3,7 @@ import { Input } from '../../components/Input/Input'
 import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthProvider/useAuth';
+import { useAuth } from '../../contexts/AuthProvider/UseAuth';
 import { SnackBar } from '../../components/Snackbar/Snackbar';
 
 export function Login() {

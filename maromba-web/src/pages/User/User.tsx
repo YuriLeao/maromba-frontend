@@ -1,6 +1,6 @@
 import './User.css'
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthProvider/useAuth';
+import { useAuth } from '../../contexts/AuthProvider/UseAuth';
 import { Input } from '../../components/Input/Input';
 import { useForm } from 'react-hook-form';
 import { cpfMask, phoneMask } from '../../Masks/mask';
