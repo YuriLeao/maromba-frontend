@@ -2,12 +2,11 @@ import './User.css'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider/useAuth';
 import { Input } from '../../components/Input/Input';
-import { Select } from '../../components/Select/Select';
 import { useForm } from 'react-hook-form';
 import { cpfMask, phoneMask } from '../../Masks/mask';
 import { DatePicker } from '../../components/DatePicker/DatePicker';
 import { AutoComplete } from '../../components/AutoComplete/AutoComplete';
-import { useRef } from 'react';
+import { Select } from '../../components/Select/Select';
 
 export function User() {
     const navigate = useNavigate();
@@ -93,12 +92,12 @@ export function User() {
                         required={true}
                         erro={errors.phoneInput ? true : false} />
                     <Select
-                        name='genderInput'
+                        name='genderSelect'
                         register={register}
                         label='Gênero'
                         list={genders}
                         required={true}
-                        erro={errors.genderInput ? true : false} />
+                        erro={errors.genderSelect ? true : false} />
                     <Input
                         name='weightInput'
                         register={register}
@@ -125,7 +124,6 @@ export function User() {
                         register={register}
                         label='Empresa'
                         list={companys}
-                        onChange={onChange}
                         required={true}
                         icon='search'
                         erro={errors.companyAutoComplete ? true : false} />

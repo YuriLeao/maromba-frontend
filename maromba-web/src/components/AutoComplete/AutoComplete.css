@@ -1,16 +1,15 @@
 .textbox input {
     width: 100%;
-    height: 45px;
+    height: 35px;
     background: transparent;
     border: 0;
-    font-size: 18px;
+    font-size: 17px;
     padding: 0 20px 0 50px;
     color: inherit;
     border-bottom: 2px solid #f9f9f9;
     border-radius: 0px;
     outline: none;
     margin-top: 15px;
-    position: relative;
 }
 
 .textbox input:focus {
@@ -18,15 +17,17 @@
 }
 
 .textbox> :is(input:focus, input.has-value)~label {
-    translate: -44px -30px;
-    scale: 0.875;
+    translate: 0px -32px;
     color: #f9f9f9;
+    font-size: 0.85em;
+    left: 0px !important;
 }
 
 .unIncon> :is(input:focus, input.has-value)~label {
-    translate: -3px -30px;
-    scale: 0.875;
+    translate: 0px -32px;
     color: #f9f9f9;
+    font-size: 0.85em;
+    left: 0px !important;
 }
 
 input {
@@ -55,7 +56,6 @@ input {
     }
 }
 
-
 /* Chrome e outros */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -73,7 +73,7 @@ input::-webkit-inner-spin-button {
 }
 
 .listResultScroll {
-    max-height: 200px;
+    max-height: 150px;
     overflow: auto;
 }
 
@@ -82,7 +82,7 @@ input::-webkit-inner-spin-button {
     align-items: center;
     gap: 16px;
     cursor: pointer;
-    height: 45px;
+    height: 40px;
     padding: 5px 10px;
     justify-content: flex-start;
     scrollbar-width: thin;

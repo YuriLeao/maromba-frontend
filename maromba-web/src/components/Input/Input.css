@@ -1,9 +1,9 @@
 .textbox input {
     width: 100%;
-    height: 45px;
+    height: 35px;
     background: transparent;
     border: 0;
-    font-size: 18px;
+    font-size: 17px;
     padding: 0 20px 0 50px;
     color: inherit;
     border-bottom: 2px solid #f9f9f9;
@@ -17,15 +17,17 @@
 }
 
 .textbox> :is(input:focus, input.has-value)~label {
-    translate: -45px -30px;
-    scale: 0.875;
+    translate: 0px -9px;
     color: #f9f9f9;
+    font-size: 0.85em;
+    left: 0px !important;
 }
 
 .unIncon> :is(input:focus, input.has-value)~label {
-    translate: -3px -30px;
-    scale: 0.875;
+    translate: 0px -9px;
     color: #f9f9f9;
+    font-size: 0.85em;
+    left: 0px !important;
 }
 
 input {

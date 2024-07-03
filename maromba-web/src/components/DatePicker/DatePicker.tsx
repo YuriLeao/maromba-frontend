@@ -4,6 +4,7 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Controller } from "react-hook-form";
+
 registerLocale('ptBR', ptBR);
 
 interface Props {
