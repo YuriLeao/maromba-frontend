@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState} from "react";
 import "./AutoComplete.css";
 import "../ComponentsStyle.css";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface Props {
-    register: any;
+    register: UseFormRegister<FieldValues>;
     label: string;
     icon?: string;
     name: string;
     error: boolean;
-    onChange?: any;
     list: Item[];
     required?: boolean;
+    setValue: (name: string, value: any) => void;
+    clearErrors: (name: string) => void; 
 }
 
 
@@ -19,15 +21,18 @@ interface Item {
     name: string
 }
 
-export const AutoComplete = (({ register, label, icon, name, error, onChange, required, list }: Props) => {
+export const AutoComplete = (({ register, label, icon, name, error, required, list, setValue, clearErrors }: Props) => {
     const [inputValue, setInputValue] = useState("");
     const [filterSearch, setFilterSearch] = useState<Item[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    const inputRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
 
-    const handleFilterChange = (event: any) => {
-        setInputValue(event.target.value);
+    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        clearErrors(name);
+        const input = event.target.value;
+        setInputValue(input);
+        setValue(name, input);
 
         const newFilter: Item[] = list.filter(item => {
             return item.name.toLowerCase().includes(event.target.value.toLowerCase());
@@ -36,13 +41,14 @@ export const AutoComplete = (({ register, label, icon, name, error, onChange, re
         setFilterSearch(newFilter);
     }
 
-    const handleSelectClick = (e: any) => {
-        e.stopPropagation();
+    const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
         setIsOpen(true);
     };
 
     function handleClickList(value: Item) {
+        clearErrors(name);
         setInputValue(value.name);
+        setValue(name, value)
         setFilterSearch([]);
         setIsOpen(false);
     };
@@ -50,6 +56,7 @@ export const AutoComplete = (({ register, label, icon, name, error, onChange, re
     function clear() {
         setInputValue("");
         setFilterSearch([]);
+        setValue(name, "");
     }
 
     function updateOptionsPosition() {
@@ -64,15 +71,14 @@ export const AutoComplete = (({ register, label, icon, name, error, onChange, re
             }
             listRef.current.style.left = inputRect.left + 'px';
             listRef.current.style.width = inputRect.width + 'px';
-            console.log("render");
         }
     }
 
-    const handleClickOutside = (e: any) => {
+    const handleClickOutside = (e: MouseEvent) => {
         if (inputRef.current &&
-            !inputRef.current.contains(e.target) &&
+            !inputRef.current.contains(e.target as Node) &&
             listRef.current &&
-            !listRef.current.contains(e.target)) {
+            !listRef.current.contains(e.target as Node)) {
             setIsOpen(false);
         }
     };
@@ -119,15 +125,13 @@ export const AutoComplete = (({ register, label, icon, name, error, onChange, re
     }, [isOpen]);
 
     return (
-        <div className={'textbox' + (icon == undefined ? ' unIcon' : '')}>
+        <div className={'text-box' + (icon == undefined ? ' unIcon' : '')}>
             <input
                 id={name}
-                name={name}
                 type="input"
-                step="any"
                 {...register(name, (required == true ? { required: true } : { required: false }))}
                 onChange={handleFilterChange}
-                className={(icon == undefined ? ' inputUnIcon' : ' inputIcon') + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
+                className={(icon == undefined ? ' input-un-icon' : ' input-icon') + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
                 value={inputValue}
                 ref={inputRef}
                 onClick={handleSelectClick} />
@@ -141,17 +145,17 @@ export const AutoComplete = (({ register, label, icon, name, error, onChange, re
                 {label}
             </label>
             {inputValue !== "" ?
-                <span className='material-symbols-outlined rightIcon' onClick={() => clear()}>
+                <span className='material-symbols-outlined right-icon' onClick={() => clear()}>
                     {"close"}
                 </span>
                 : ""}
 
             {isOpen && filterSearch.length !== 0 &&
-                <div className="listResult" ref={listRef} >
-                    <div className="listResultScroll" >
+                <div className="list-result" ref={listRef} >
+                    <div className="list-result-scroll" >
                         {
                             filterSearch.map(value => {
-                                return <div key={value.id} className='listItem' onClick={() => handleClickList(value)}>
+                                return <div key={value.id} className='list-item' onClick={() => handleClickList(value)}>
                                     <p className="ml5">{value.name}</p>
                                 </div>
                             })

@@ -7,7 +7,7 @@ export function Menu() {
     const auth = useAuth();
     const navigate = useNavigate();
 
-    let [openCloseMenu, setOpenCloseMenu] = useState<string>("contents");
+    let [openCloseMenu, setopenCloseMenu] = useState<string>("contents");
 
     const loggout = () => {
         auth.logout();
@@ -15,7 +15,7 @@ export function Menu() {
     };
 
     const openCloseMenuClick = () => {
-        setOpenCloseMenu(openCloseMenu === "contents" ? "contents openCloseMenu" : "contents");
+        setopenCloseMenu(openCloseMenu === "contents" ? "contents open-close-menu" : "contents");
     };
 
     return (
@@ -32,7 +32,7 @@ export function Menu() {
                         <nav>
                             <div className="profile">
                                 <img className="avatar" src="../../src/assets/img/avatar.png"></img>
-                                <div className="username">Yuri</div>
+                                <div className="user-name">Yuri</div>
                             </div>
                             <button>
                                 <span>
@@ -66,8 +66,8 @@ export function Menu() {
                                     <span>Messages</span>
                                 </span>
                             </button>
-                            <button onClick={openCloseMenuClick} className="widthMenu">
-                                <span className="widthMenu">
+                            <button onClick={openCloseMenuClick} className="width-menu">
+                                <span className="width-menu">
                                     <i className="material-symbols-outlined">
                                         menu
                                     </i>

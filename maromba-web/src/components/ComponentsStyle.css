@@ -1,10 +1,10 @@
-.textbox {
+.text-box {
     width: 72%;
     position: relative;
     height: 60px;
 }
 
-.textbox span {
+.text-box span {
     position: absolute;
     top: 50%;
     left: 6px;
@@ -12,7 +12,7 @@
     color: #f9f9f9;
 }
 
-.textbox label {
+.text-box label {
     position: absolute;
     top: 50%;
     translate: 0px -8px;
@@ -20,7 +20,7 @@
     font-size: 18px;
 }
 
-.textbox input {
+.text-box input {
     width: 100%;
     height: 35px;
     background: transparent;
@@ -38,30 +38,30 @@
     transition: border 400ms ease-out;
 }
 
-.textbox input:focus {
+.text-box input:focus {
     border-color: #3E065F;
 }
 
-.textbox> :is(input:focus, input.has-value)~label {
+.text-box> :is(input:focus, input.has-value)~label {
     translate: 0px -32px;
     color: #f9f9f9;
     font-size: 0.85em;
     left: 0px !important;
 }
 
-.textbox .unIcon> :is(input:focus, input.has-value)~label {
+.text-box .unIcon> :is(input:focus, input.has-value)~label {
     translate: 0px -32px;
     color: #f9f9f9;
     font-size: 0.85em;
     left: 0px !important;
 }
 
-.textbox input {
+.text-box input {
     -webkit-text-fill-color: white;
     -webkit-background-clip: text !important;
 }
 
-.textbox .invalid {
+.text-box .invalid {
     animation: shake 0.1635s 0s 3;
     border-color: red !important;
 }
@@ -90,11 +90,11 @@ input::-webkit-inner-spin-button {
 }
 
 @media (width <=700px) {
-    .textbox> :is(input:focus, input.has-value)~label {
+    .text-box> :is(input:focus, input.has-value)~label {
         font-size: 0.75em !important;
     }
 
-    .textbox .unIcon> :is(input:focus, input.has-value)~label {
+    .text-box .unIcon> :is(input:focus, input.has-value)~label {
         font-size: 0.75em !important;
     }
 
@@ -107,21 +107,22 @@ input::-webkit-inner-spin-button {
     }
 }
 
-.listResult {
+.list-result {
     background-color: #000000;
     border-radius: 5px;
     overflow: hidden;
     width: 100%;
     z-index: 9999;
     position: fixed;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 
-.listResultScroll {
+.list-result-scroll {
     max-height: 150px;
     overflow: auto;
 }
 
-.listItem {
+.list-item {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -133,25 +134,29 @@ input::-webkit-inner-spin-button {
     scrollbar-color: #5f5f5f #313131;
 }
 
-.listItem:hover {
+.list-item:hover {
     background-color: #3E065F;
 }
 
-.rightIcon {
+.right-icon {
     display: inline-block;
     right: -0.5%;
     left: unset !important;
     cursor: pointer;
 }
 
-.inputIcon {
+.input-icon {
     padding: 0px 30px 0px 40px !important;
 }
 
-.inputUnIcon {
+.input-un-icon {
     padding: 0px 0px 0px 5px !important;
 }
 
 .ml5 {
     margin-left: 5px !important;
+}
+
+.pointer {
+    cursor: pointer;
 }

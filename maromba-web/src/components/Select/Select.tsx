@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import "./Select.css";
 import "../ComponentsStyle.css";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface Props {
-    register: any;
+    register: UseFormRegister<FieldValues>;
     label: string;
     name: string;
     error: boolean;
     list: Item[];
     required?: boolean;
+    setValue: (name: string, value: any) => void;
+    clearErrors: (name: string) => void; 
 }
 
 
@@ -17,19 +20,21 @@ interface Item {
     name: string
 }
 
-export const Select = (({ register, label, name, error, required, list }: Props) => {
+export const Select = (({ register, label, name, error, required, list, setValue, clearErrors }: Props) => {
     const [inputValue, setInputValue] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const inputRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
 
-    const handleSelectClick = (e: any) => {
+    const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
         e.stopPropagation();
         setIsOpen(true);
     };
 
     function handleClickList(value: Item) {
+        clearErrors(name);
         setInputValue(value.name);
+        setValue(name, value);
         setIsOpen(false);
     };
 
@@ -48,11 +53,11 @@ export const Select = (({ register, label, name, error, required, list }: Props)
         }
     }
 
-    const handleClickOutside = (e: any) => {
+    const handleClickOutside = (e: MouseEvent) => {
         if (inputRef.current &&
-            !inputRef.current.contains(e.target) &&
+            !inputRef.current.contains(e.target as Node) &&
             listRef.current &&
-            !listRef.current.contains(e.target)) {
+            !listRef.current.contains(e.target as Node)) {
             setIsOpen(false);
         }
     };
@@ -89,34 +94,32 @@ export const Select = (({ register, label, name, error, required, list }: Props)
     }, [isOpen]);
 
     return (
-        <div className='textbox unIcon'>
+        <div className='text-box unIcon'>
             <input
                 id={name}
-                name={name}
                 type="text"
-                step="any"
                 {...register(name, (required == true ? { required: true } : { required: false }))}
                 style={{ padding: '0px 30px 0px 5px' }}
-                className={'select' + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
+                className={'pointer' + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
                 value={inputValue}
                 ref={inputRef}
                 onClick={handleSelectClick} />
             <label
                 htmlFor={name}
                 style={{ left: '0px' }}
-                className={'select'}>
+                className={'pointer'}>
                 {label}
             </label>
-            <span className='material-symbols-outlined rightIcon' >
-                {"keyboard_arrow_down"}
+            <span className='material-symbols-outlined right-icon' >
+                {isOpen == true ? "keyboard_arrow_down" : "keyboard_arrow_up"}
             </span>
 
             {isOpen &&
-                <div className="listResult" ref={listRef} >
-                    <div className="listResultScroll" >
+                <div className="list-result" ref={listRef} >
+                    <div className="list-result-scroll" >
                         {
                             list.map(value => {
-                                return <div key={value.id} className='listItem' onClick={() => handleClickList(value)}>
+                                return <div key={value.id} className='list-item' onClick={() => handleClickList(value)}>
                                     <p className="ml5">{value.name}</p>
                                 </div>
                             })

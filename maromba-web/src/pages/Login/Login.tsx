@@ -1,6 +1,6 @@
 import './Login.css'
 import { Input } from '../../components/Input/Input'
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider/UseAuth';
@@ -11,7 +11,7 @@ export function Login() {
     const auth = useAuth();
     const [errorApi, setErrorApi] = useState<string>("");
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, clearErrors, formState: { errors } } = useForm();
 
     const snackbarRef = useRef(null);
 
@@ -39,6 +39,8 @@ export function Login() {
                 <Input
                     name='emailInput'
                     register={register}
+                    setValue={setValue}
+                    clearErrors={clearErrors}
                     type='email'
                     label='Email'
                     icon='mail'
@@ -47,13 +49,15 @@ export function Login() {
                 <Input
                     name='passwordInput'
                     register={register}
+                    setValue={setValue}
+                    clearErrors={clearErrors}
                     type='password'
                     label='Senha'
                     icon='lock'
                     required={true}
                     error={errors.passwordInput ? true : false} />
                 <button
-                    type="submit" className='mainButton'>
+                    type="submit" className='main-button'>
                     Entrar
                 </button>
                 <a

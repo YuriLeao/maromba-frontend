@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider/UseAuth';
 import { Input } from '../../components/Input/Input';
 import { useForm } from 'react-hook-form';
-import { cpfMask, phoneMask } from '../../Masks/mask';
-import { DatePicker } from '../../components/DatePicker/DatePicker';
 import { AutoComplete } from '../../components/AutoComplete/AutoComplete';
 import { Select } from '../../components/Select/Select';
+import { DatePicker } from '../../components/DatePicker/DatePicker';
 
 export function User() {
     const navigate = useNavigate();
     const auth = useAuth();
 
-    const { control, register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, clearErrors, setValue, formState: { errors } } = useForm();
 
     const onSubmit = async (form: any) => {
         try {
@@ -21,18 +20,6 @@ export function User() {
 
         }
     }
-
-    const onChange = ((e: any, name: string, type: string) => {
-
-        var value = e.target.value;
-        if (type === 'phone') {
-            value = phoneMask(value);
-        } else if (type === 'cpf') {
-            value = cpfMask(value);
-        }
-
-        setValue(name, value);
-    });
 
     const genders = [
         { id: 'M', name: 'Monstro' },
@@ -72,15 +59,26 @@ export function User() {
                         register={register}
                         type='input'
                         label='Nome'
-                        onChange={onChange}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         required={true}
                         error={errors.nameInput ? true : false} />
+                    <Input
+                        name='cpfInput'
+                        register={register}
+                        type='cpf'
+                        label='CPF'
+                        setValue={setValue}
+                        clearErrors={clearErrors}
+                        required={true}
+                        error={errors.cpfInput ? true : false} />
                     <Input
                         name='emailInput'
                         register={register}
                         type='email'
                         label='Email'
-                        onChange={onChange}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         required={true}
                         error={errors.emailInput ? true : false} />
                     <Input
@@ -88,12 +86,15 @@ export function User() {
                         register={register}
                         type='phone'
                         label='Celular'
-                        onChange={onChange}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         required={true}
                         error={errors.phoneInput ? true : false} />
                     <Select
                         name='genderSelect'
                         register={register}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         label='Gênero'
                         list={genders}
                         required={true}
@@ -103,18 +104,23 @@ export function User() {
                         register={register}
                         type='number'
                         label='Peso'
-                        onChange={onChange}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         required={true}
                         error={errors.weightInput ? true : false} />
                     <DatePicker
-                        name='birthDatePicker'
-                        control={control}
+                        name='birthDatePickerTeste'
+                        register={register}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         label='Data de nascimento'
                         required={true}
-                        error={errors.birthDatePicker ? true : false} />
+                        error={errors.birthDatePickerTeste ? true : false} />
                     <Select
                         name='authorizationInput'
                         register={register}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         label='Tipo de Usuário'
                         list={authorizations}
                         required={true}
@@ -122,6 +128,8 @@ export function User() {
                     <AutoComplete
                         name='companyAutoComplete'
                         register={register}
+                        setValue={setValue}
+                        clearErrors={clearErrors}
                         label='Empresa'
                         list={companys}
                         required={true}
@@ -129,7 +137,7 @@ export function User() {
                         error={errors.companyAutoComplete ? true : false} />
 
                     <button
-                        type="submit" className='mainButton'>
+                        type="submit" className='main-button'>
                         Cadastrar
                     </button>
                 </form>

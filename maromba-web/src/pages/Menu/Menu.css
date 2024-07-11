@@ -54,7 +54,7 @@
     border-radius: 50%;
 }
 
-.username {
+.user-name {
     margin: 0;
     font-weight: 500px;
 }
@@ -96,7 +96,7 @@
     line-height: 1;
 }
 
-.widthMenu {
+.width-menu {
     width: 50px !important;
 }
 
@@ -112,56 +112,56 @@
     transition: 0.3s;
 }
 
-.openCloseMenu {
+.open-close-menu {
     width: 100% !important;
 }
 
-.openCloseMenu .logo-img {
+.open-close-menu .logo-img {
     display: none;
 }
 
-.openCloseMenu .ml14 {
+.open-close-menu .ml14 {
     display: none;
 }
 
-.openCloseMenu .logo-icon {
+.open-close-menu .logo-icon {
     display: block;
 }
 
-.openCloseMenu button>span {
+.open-close-menu button>span {
     width: 50px !important;
 }
 
-.openCloseMenu button>span>span {
+.open-close-menu button>span>span {
     opacity: 0;
     visibility: hidden;
 }
 
-.openCloseMenu .profile {
+.open-close-menu .profile {
     margin-bottom: 0px;
 }
 
-.openCloseMenu .avatar {
+.open-close-menu .avatar {
     width: 30px;
     height: 35px;
     margin-bottom: 0;
 }
 
-.openCloseMenu .username {
+.open-close-menu .user-name {
     opacity: 0;
     visibility: hidden;
 }
 
-.openCloseMenu .menu {
+.open-close-menu .menu {
     width: 75px;
     height: 100%;
 }
 
-.openCloseMenu .frame {
+.open-close-menu .frame {
     width: calc( 100% - 75px);
 }
 
-.openCloseMenu .sidebar {
+.open-close-menu .sidebar {
     width: 72px;
 }
 
@@ -213,33 +213,33 @@
         margin-bottom: 0;
     }
 
-    .username {
+    .user-name {
         opacity: 0;
         visibility: hidden;
     }
 
-    .openCloseMenu .sidebar {
+    .open-close-menu .sidebar {
         width: 250px;
         z-index: 9999;
     }
 
-    .openCloseMenu .logo-img {
+    .open-close-menu .logo-img {
         display: block;
     }
 
-    .openCloseMenu .ml14 {
+    .open-close-menu .ml14 {
         display: block;
     }
 
-    .openCloseMenu .logo-icon {
+    .open-close-menu .logo-icon {
         display: none;
     }
 
-    .openCloseMenu .widthMenu {
+    .open-close-menu .width-menu {
         width: 50px !important;
     }
 
-    .openCloseMenu button>span {
+    .open-close-menu button>span {
         display: flex;
         align-items: center;
         gap: 12px;
@@ -250,23 +250,23 @@
         width: 230px !important;
     }
 
-    .openCloseMenu button>span>span {
+    .open-close-menu button>span>span {
         opacity: 1;
         visibility: visible;
         transition: 0.3s;
     }
 
-    .openCloseMenu .avatar {
+    .open-close-menu .avatar {
         width: 80px;
         height: 80px;
     }
 
-    .openCloseMenu .username {
+    .open-close-menu .user-name {
         opacity: 1;
         visibility: visible;
     }
 
-    .openCloseMenu .frame {
+    .open-close-menu .frame {
         filter: blur(1.0rem);
     }
     

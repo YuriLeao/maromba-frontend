@@ -82,11 +82,6 @@ h1 {
   height: 100%; 
 }
 
-.confirmDiv {
-  width: 100%;
-  position: relative;
-}
-
 .ml5 {
   margin-left: 5px;
 }
@@ -103,7 +98,7 @@ h1 {
   margin-bottom: 0px;
 }
 
-.mainButton {
+.main-button {
   padding: 10px 20px;
   color: white;
   margin-top: 15px;
