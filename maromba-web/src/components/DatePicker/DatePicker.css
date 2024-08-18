@@ -20,7 +20,7 @@
 }
 
 .calendar-current-year {
-    top: -5px;
+    top: -7px;
     position: relative;
 }
 
@@ -39,6 +39,7 @@
 
 .calendar-year-select {
     height: 20px;
+    padding-top: 3px;
 }
 
 .calendar-year-select:hover {
@@ -157,7 +158,7 @@
         font-size: 0.8rem;
     }
 
-    .material-symbols-outlined {
+    .text-box .material-symbols-outlined {
         font-size: 20px !important;
     }
 }

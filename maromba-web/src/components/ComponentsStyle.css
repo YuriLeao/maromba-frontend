@@ -105,6 +105,10 @@ input::-webkit-inner-spin-button {
     label {
         font-size: 13.3px !important;
     }
+
+    table {
+        font-size: 13.3px !important;
+    }
 }
 
 .list-result {

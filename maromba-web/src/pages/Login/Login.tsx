@@ -17,7 +17,6 @@ export function Login() {
 
     const onSubmit = async (form: any) => {
         try {
-
             await auth.authenticate(form.emailInput, form.passwordInput);
 
             navigate("/menu");

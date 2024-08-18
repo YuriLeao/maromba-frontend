@@ -1,170 +1,234 @@
-import { MouseEventHandler, useEffect, useRef, useState} from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import "./AutoComplete.css";
 import "../ComponentsStyle.css";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import {
+	FieldValues,
+	UseFormClearErrors,
+	UseFormRegister,
+	UseFormSetValue,
+} from "react-hook-form";
 
-interface Props {
-    register: UseFormRegister<FieldValues>;
-    label: string;
-    icon?: string;
-    name: string;
-    error: boolean;
-    list: Item[];
-    required?: boolean;
-    setValue: (name: string, value: any) => void;
-    clearErrors: (name: string) => void; 
+interface Props<T extends Item> {
+	register: UseFormRegister<any>;
+	label: string;
+	icon?: string;
+	name: string;
+	error: boolean;
+	list: Item[];
+	required?: boolean;
+	setValue: UseFormSetValue<any>;
+	value: any;
+	clearErrors: UseFormClearErrors<any>;
 }
-
 
 interface Item {
-    id: string,
-    name: string
+	id: string;
+	name: string;
 }
 
-export const AutoComplete = (({ register, label, icon, name, error, required, list, setValue, clearErrors }: Props) => {
-    const [inputValue, setInputValue] = useState("");
-    const [filterSearch, setFilterSearch] = useState<Item[]>([]);
-    const [isOpen, setIsOpen] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const listRef = useRef<HTMLDivElement>(null);
+export function AutoComplete<T extends Item>({
+	register,
+	label,
+	icon,
+	name,
+	error,
+	required,
+	list,
+	setValue,
+	value,
+	clearErrors,
+}: Props<T>) {
+	value = value || { id: "", name: "" };
+	setValue(name, value);
+	const [inputValue, setInputValue] = useState(value.name);
+	const [filterSearch, setFilterSearch] = useState<Item[]>(list);
+	const [isOpen, setIsOpen] = useState(false);
+	const inputRef = useRef<HTMLInputElement>(null);
+	const listRef = useRef<HTMLDivElement>(null);
 
-    const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        clearErrors(name);
-        const input = event.target.value;
-        setInputValue(input);
-        setValue(name, input);
+	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		clearErrors(name);
+		const input = event.target.value;
+		setInputValue(input);
 
-        const newFilter: Item[] = list.filter(item => {
-            return item.name.toLowerCase().includes(event.target.value.toLowerCase());
-        });
+		const newFilter: Item[] = list.filter((item) => {
+			return item.name.toLowerCase().includes(event.target.value.toLowerCase());
+		});
 
-        setFilterSearch(newFilter);
-    }
+		setFilterSearch(newFilter);
+	};
 
-    const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
-        setIsOpen(true);
-    };
+	const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
+		setIsOpen(true);
+	};
 
-    function handleClickList(value: Item) {
-        clearErrors(name);
-        setInputValue(value.name);
-        setValue(name, value)
-        setFilterSearch([]);
-        setIsOpen(false);
-    };
+	function handleClickList(item: Item) {
+		clearErrors(name);
+		setInputValue(item.name);
+		setValue(name, item);
+		setFilterSearch([]);
+		setIsOpen(false);
+	}
 
-    function clear() {
-        setInputValue("");
-        setFilterSearch([]);
-        setValue(name, "");
-    }
+	function clear() {
+		setInputValue("");
+		setFilterSearch([]);
+		setValue(name, "");
+	}
 
-    function updateOptionsPosition() {
-        if (listRef.current != null && inputRef.current != null) {
-            var inputRect = inputRef.current.getBoundingClientRect();
-            var optionsHeight = listRef.current.offsetHeight;
-            var viewportHeight = window.innerHeight;
-            if (viewportHeight - inputRect.bottom >= optionsHeight) {
-                listRef.current.style.top = inputRect.bottom + 'px';
-            } else {
-                listRef.current.style.top = (inputRect.top - listRef.current.offsetHeight - 15) + 'px';
-            }
-            listRef.current.style.left = inputRect.left + 'px';
-            listRef.current.style.width = inputRect.width + 'px';
-        }
-    }
+	function updateOptionsPosition() {
+		if (listRef.current != null && inputRef.current != null) {
+			var inputRect = inputRef.current.getBoundingClientRect();
+			var optionsHeight = listRef.current.offsetHeight;
+			var viewportHeight = window.innerHeight;
+			if (viewportHeight - inputRect.bottom >= optionsHeight) {
+				listRef.current.style.top = inputRect.bottom + "px";
+			} else {
+				listRef.current.style.top =
+					inputRect.top - listRef.current.offsetHeight - 15 + "px";
+			}
+			listRef.current.style.left = inputRect.left + "px";
+			listRef.current.style.width = inputRect.width + "px";
+		}
+	}
 
-    const handleClickOutside = (e: MouseEvent) => {
-        if (inputRef.current &&
-            !inputRef.current.contains(e.target as Node) &&
-            listRef.current &&
-            !listRef.current.contains(e.target as Node)) {
-            setIsOpen(false);
-        }
-    };
+	const handleClickOutside = (e: MouseEvent) => {
+		if (
+			inputRef.current &&
+			!inputRef.current.contains(e.target as Node) &&
+			listRef.current &&
+			!listRef.current.contains(e.target as Node)
+		) {
+			setIsOpen(false);
+		}
+	};
 
-    useEffect(() => {
-        if (inputValue === "") {
-            setFilterSearch([]);
-        }
+	useEffect(() => {
+		if (inputValue === "") {
+			setFilterSearch([]);
+		}
 
-        if (filterSearch.length !== 0) {
-            updateOptionsPosition();
-        }
-    }, [inputValue]);
+		if (filterSearch.length !== 0) {
+			updateOptionsPosition();
+		}
+	}, [inputValue]);
 
-    useEffect(() => {
-        if (inputRef.current != null && inputRef.current.parentElement != null
-            && inputRef.current.parentElement.parentElement != null) {
-            if (isOpen) {
-                updateOptionsPosition();
-                inputRef.current.parentElement.parentElement.addEventListener('scroll', updateOptionsPosition);
-                inputRef.current.parentElement.parentElement.addEventListener('resize', updateOptionsPosition);
-                window.addEventListener('scroll', updateOptionsPosition);
-                window.addEventListener('resize', updateOptionsPosition);
-                document.addEventListener('click', handleClickOutside);
-            } else {
-                inputRef.current.parentElement.parentElement.removeEventListener('scroll', updateOptionsPosition);
-                inputRef.current.parentElement.parentElement.removeEventListener('resize', updateOptionsPosition);
-                window.removeEventListener('scroll', updateOptionsPosition);
-                window.removeEventListener('resize', updateOptionsPosition);
-                document.removeEventListener('click', handleClickOutside);
-            }
-        }
+	useEffect(() => {
+		if (
+			inputRef.current != null &&
+			inputRef.current.parentElement != null &&
+			inputRef.current.parentElement.parentElement != null
+		) {
+			if (isOpen) {
+				updateOptionsPosition();
+				inputRef.current.parentElement.parentElement.addEventListener(
+					"scroll",
+					updateOptionsPosition
+				);
+				inputRef.current.parentElement.parentElement.addEventListener(
+					"resize",
+					updateOptionsPosition
+				);
+				window.addEventListener("scroll", updateOptionsPosition);
+				window.addEventListener("resize", updateOptionsPosition);
+				document.addEventListener("click", handleClickOutside);
+			} else {
+				inputRef.current.parentElement.parentElement.removeEventListener(
+					"scroll",
+					updateOptionsPosition
+				);
+				inputRef.current.parentElement.parentElement.removeEventListener(
+					"resize",
+					updateOptionsPosition
+				);
+				window.removeEventListener("scroll", updateOptionsPosition);
+				window.removeEventListener("resize", updateOptionsPosition);
+				document.removeEventListener("click", handleClickOutside);
+			}
+		}
 
-        return () => {
-            if (inputRef.current != null && inputRef.current.parentElement != null
-                && inputRef.current.parentElement.parentElement != null) {
-                inputRef.current.parentElement.parentElement.removeEventListener('scroll', updateOptionsPosition);
-                inputRef.current.parentElement.parentElement.removeEventListener('resize', updateOptionsPosition);
-            }
-            window.removeEventListener('scroll', updateOptionsPosition);
-            window.removeEventListener('resize', updateOptionsPosition);
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [isOpen]);
+		return () => {
+			if (
+				inputRef.current != null &&
+				inputRef.current.parentElement != null &&
+				inputRef.current.parentElement.parentElement != null
+			) {
+				inputRef.current.parentElement.parentElement.removeEventListener(
+					"scroll",
+					updateOptionsPosition
+				);
+				inputRef.current.parentElement.parentElement.removeEventListener(
+					"resize",
+					updateOptionsPosition
+				);
+			}
+			window.removeEventListener("scroll", updateOptionsPosition);
+			window.removeEventListener("resize", updateOptionsPosition);
+			document.removeEventListener("click", handleClickOutside);
+		};
+	}, [isOpen]);
 
-    return (
-        <div className={'text-box' + (icon == undefined ? ' unIcon' : '')}>
-            <input
-                id={name}
-                type="input"
-                {...register(name, (required == true ? { required: true } : { required: false }))}
-                onChange={handleFilterChange}
-                className={(icon == undefined ? ' input-un-icon' : ' input-icon') + (inputValue ? ' has-value' : '') + (error ? ' invalid' : '')}
-                value={inputValue}
-                ref={inputRef}
-                onClick={handleSelectClick} />
-            <span style={(icon == undefined) ? { display: 'none' } : { display: 'inline-block' }}
-                className='material-symbols-outlined'>
-                {icon}
-            </span>
-            <label
-                htmlFor={name}
-                style={(icon == undefined) ? { left: '0px' } : { left: '40px' }}>
-                {label}
-            </label>
-            {inputValue !== "" ?
-                <span className='material-symbols-outlined right-icon' onClick={() => clear()}>
-                    {"close"}
-                </span>
-                : ""}
+	return (
+		<div className={"text-box" + (icon == undefined ? " unIcon" : "")}>
+			<input
+				id={name}
+				type="input"
+				{...register(
+					name,
+					required == true ? { required: true } : { required: false }
+				)}
+				onChange={handleFilterChange}
+				className={
+					(icon == undefined ? " input-un-icon" : " input-icon") +
+					(inputValue || value ? " has-value" : "") +
+					(error ? " invalid" : "")
+				}
+				value={inputValue}
+				ref={inputRef}
+				onClick={handleSelectClick}
+			/>
+			<span
+				style={
+					icon == undefined ? { display: "none" } : { display: "inline-block" }
+				}
+				className="material-symbols-outlined"
+			>
+				{icon}
+			</span>
+			<label
+				htmlFor={name}
+				style={icon == undefined ? { left: "0px" } : { left: "40px" }}
+			>
+				{label}
+			</label>
+			{inputValue !== "" ? (
+				<span
+					className="material-symbols-outlined right-icon"
+					onClick={() => clear()}
+				>
+					{"close"}
+				</span>
+			) : (
+				""
+			)}
 
-            {isOpen && filterSearch.length !== 0 &&
-                <div className="list-result" ref={listRef} >
-                    <div className="list-result-scroll" >
-                        {
-                            filterSearch.map(value => {
-                                return <div key={value.id} className='list-item' onClick={() => handleClickList(value)}>
-                                    <p className="ml5">{value.name}</p>
-                                </div>
-                            })
-                        }
-                    </div>
-                </div>
-            }
-        </div>
-
-
-    );
-});
+			{isOpen && filterSearch.length !== 0 && (
+				<div className="list-result" ref={listRef}>
+					<div className="list-result-scroll">
+						{filterSearch.map((value) => {
+							return (
+								<div
+									key={value.id}
+									className="list-item"
+									onClick={() => handleClickList(value)}
+								>
+									<p className="ml5">{value.name}</p>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			)}
+		</div>
+	);
+}

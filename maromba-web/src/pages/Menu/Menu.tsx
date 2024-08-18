@@ -34,12 +34,12 @@ export function Menu() {
                                 <img className="avatar" src="../../src/assets/img/avatar.png"></img>
                                 <div className="user-name">Yuri</div>
                             </div>
-                            <button>
+                            <button onClick={(e) => navigate("/menu/users")}>
                                 <span>
                                     <i className="material-symbols-outlined">
-                                        menu
+                                        person
                                     </i>
-                                    <span>Home</span>
+                                    <span>Usuários</span>
                                 </span>
                             </button>
                             <button>

@@ -7,7 +7,8 @@
 html,
 body,
 .wrapper {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
 }
 
@@ -15,8 +16,8 @@ body {
   display: grid;
   place-items: center;
   margin: 0;
-  background: linear-gradient(135deg, #161616, #3E065F, #700B97, #8E05C2);
-  background-size: 300% 300%;
+  background: linear-gradient(135deg, #161616, #3E065F, #700B97, #8E05C2) #700B97;
+  background-size: 300%;
   animation: colors 10s ease infinite;
   color: #f9f9f9;
 }
@@ -73,7 +74,7 @@ h1 {
 
 @media (width <= 300px) {
   body {
-    font-family: 20px;
+    font-size: 20px;
   }
 }
 
@@ -111,6 +112,31 @@ h1 {
   border: 0;
   font-weight: 600;
   box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
+}
+
+.main-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.second-button {
+  padding: 10px 20px;
+  color: white;
+  margin-top: 15px;
+  background-color:transparent;
+  width: auto !important;
+  height: auto;
+  font-size: 18px;;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid #700B97;
+  font-weight: 600;
+  box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
+}
+
+.second-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 ::-webkit-scrollbar {
