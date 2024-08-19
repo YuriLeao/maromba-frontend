@@ -182,38 +182,25 @@ export function AutoComplete<T extends Item>({
 					required == true ? { required: true } : { required: false }
 				)}
 				onChange={handleFilterChange}
-				className={
-					(icon == undefined ? " input-un-icon" : " input-icon") +
-					(inputValue || value ? " has-value" : "") +
-					(error ? " invalid" : "")
-				}
+				className={(inputValue ? " has-value" : "") + (error ? " invalid" : "")}
+				style={{ padding: "0px 25px 0px 5px" }}
 				value={inputValue}
 				ref={inputRef}
 				onClick={handleSelectClick}
 			/>
-			<span
-				style={
-					icon == undefined ? { display: "none" } : { display: "inline-block" }
-				}
-				className="material-symbols-outlined"
-			>
-				{icon}
-			</span>
+
 			<label
 				htmlFor={name}
-				style={icon == undefined ? { left: "0px" } : { left: "40px" }}
+				style={{ left: "5px", maxWidth: "calc(100% - 30px)" }}
 			>
 				{label}
 			</label>
 			{inputValue !== "" ? (
-				<span
-					className="material-symbols-outlined right-icon"
-					onClick={() => clear()}
-				>
+				<span className="material-symbols-outlined" onClick={() => clear()}>
 					{"close"}
 				</span>
 			) : (
-				""
+				<span className="material-symbols-outlined" style={{cursor: "auto"}}>{"search"}</span>
 			)}
 
 			{isOpen && filterSearch.length !== 0 && (

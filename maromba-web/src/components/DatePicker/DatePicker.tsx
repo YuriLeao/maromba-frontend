@@ -223,10 +223,16 @@ export const DatePicker = ({
 	}
 
 	const [selectedDate, setSelectedDate] = useState<Date | null>(date);
-	const [selectedFakeDate, setSelectedFakeDate] = useState<Date | null>(date ?? new Date());
+	const [selectedFakeDate, setSelectedFakeDate] = useState<Date | null>(
+		date ?? new Date()
+	);
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-	const [currentMonth, setCurrentMonth] = useState(date?.getMonth() ?? new Date().getMonth());
-	const [currentYear, setCurrentYear] = useState(date?.getFullYear() ?? new Date().getFullYear());
+	const [currentMonth, setCurrentMonth] = useState(
+		date?.getMonth() ?? new Date().getMonth()
+	);
+	const [currentYear, setCurrentYear] = useState(
+		date?.getFullYear() ?? new Date().getFullYear()
+	);
 	const [yearPage, setYearPage] = useState(
 		Math.floor((new Date().getFullYear() - 1900) / 8)
 	);
@@ -236,6 +242,7 @@ export const DatePicker = ({
 	const calendarRef = useRef<HTMLDivElement>(null);
 	const yearsDivRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const iconRef = useRef<HTMLSpanElement>(null);
 	const [inputValue, setInputValue] = useState(dateFake);
 
 	useEffect(() => {
@@ -393,7 +400,9 @@ export const DatePicker = ({
 			inputRef.current &&
 			!inputRef.current.contains(event.target as Node) &&
 			calendarRef.current &&
-			!calendarRef.current.contains(event.target as Node)
+			!calendarRef.current.contains(event.target as Node) &&
+			iconRef.current &&
+			!iconRef.current.contains(event.target as Node)
 		) {
 			setIsCalendarOpen(false);
 			setIsYearListOpen(false);
@@ -488,18 +497,24 @@ export const DatePicker = ({
 					)}
 					onChange={handleDateChange}
 					className={
-						"input-un-icon " +
-						(selectedDate ? " has-value" : "") +
-						(error ? " invalid" : "")
+						(selectedDate ? " has-value" : "") + (error ? " invalid" : "")
 					}
+					style={{ padding: "0px 25px 0px 5px" }}
 					value={inputValue}
 					ref={inputRef}
 					onClick={toggleCalendar}
 				/>
-				<label htmlFor={name} style={{ left: "0px" }}>
+				<label
+					htmlFor={name}
+					style={{ left: "5px", maxWidth: "calc(100% - 30px)" }}
+				>
 					{label}
 				</label>
-				<span className="material-symbols-outlined right-icon">
+				<span
+					ref={iconRef}
+					className="material-symbols-outlined"
+					onClick={toggleCalendar}
+				>
 					{"calendar_today"}
 				</span>
 			</div>

@@ -39,6 +39,7 @@ export function Select<T extends Item>({
 	const [isOpen, setIsOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const listRef = useRef<HTMLDivElement>(null);
+	const spanRef = useRef<HTMLSpanElement>(null);
 
 	useEffect(() => {
 		if (value) {
@@ -48,7 +49,7 @@ export function Select<T extends Item>({
 
 	const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
 		e.stopPropagation();
-		setIsOpen(true);
+		setIsOpen(!isOpen);
 	};
 
 	function handleClickList(item: Item) {
@@ -79,7 +80,9 @@ export function Select<T extends Item>({
 			inputRef.current &&
 			!inputRef.current.contains(e.target as Node) &&
 			listRef.current &&
-			!listRef.current.contains(e.target as Node)
+			!listRef.current.contains(e.target as Node) &&
+			spanRef.current &&
+			!spanRef.current.contains(e.target as Node)
 		) {
 			setIsOpen(false);
 		}
@@ -149,7 +152,7 @@ export function Select<T extends Item>({
 					name,
 					required == true ? { required: true } : { required: false }
 				)}
-				style={{ padding: "0px 30px 0px 5px" }}
+				style={{ padding: "0px 25px 0px 5px" }}
 				className={
 					"pointer" +
 					(inputValue ? " has-value" : "") +
@@ -160,10 +163,10 @@ export function Select<T extends Item>({
 				onClick={handleSelectClick}
 				onChange={(e) => setInputValue(e.target.value)}
 			/>
-			<label htmlFor={name} style={{ left: "0px" }} className={"pointer"}>
+			<label htmlFor={name} style={{ left: "5px", maxWidth: "calc(100% - 30px)" }} className={"pointer"}>
 				{label}
 			</label>
-			<span className="material-symbols-outlined right-icon">
+			<span className="material-symbols-outlined" onClick={handleSelectClick} ref={spanRef}>
 				{isOpen == true ? "keyboard_arrow_down" : "keyboard_arrow_up"}
 			</span>
 

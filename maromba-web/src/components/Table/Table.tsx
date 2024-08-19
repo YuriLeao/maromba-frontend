@@ -7,10 +7,6 @@ interface Column {
   label: string;
 }
 
-interface Data {
-  [key: string]: string | number;
-}
-
 interface TableProps {
   columns: Column[];
   data: any;
@@ -214,15 +210,18 @@ export const Table = ({ columns, data, handleEdit, handleDelete }: TableProps) =
     }
   };
 
-  const sortedData = [...data].sort((a, b) => {
-    if (a[sortKey] < b[sortKey]) {
-      return sortOrder === "asc" ? -1 : 1;
-    }
-    if (a[sortKey] > b[sortKey]) {
-      return sortOrder === "asc" ? 1 : -1;
-    }
-    return 0;
-  });
+const sortedData = [...data].sort((a, b) => {
+  const valueA = a[sortKey].toString().toLowerCase();
+  const valueB = b[sortKey].toString().toLowerCase();
+
+  if (valueA < valueB) {
+    return sortOrder === "asc" ? -1 : 1;
+  }
+  if (valueA > valueB) {
+    return sortOrder === "asc" ? 1 : -1;
+  }
+  return 0;
+});
 
   return (
     <table ref={tableRef}>

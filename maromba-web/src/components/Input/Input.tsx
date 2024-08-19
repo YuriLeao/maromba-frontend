@@ -48,6 +48,7 @@ export const Input = ({
 	onChangeParent,
 }: Props) => {
 	const [valueInput, setValueInput] = useState(value);
+	const [visible, setVisible] = useState(false);
 
 	const onChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -70,11 +71,15 @@ export const Input = ({
 		onChangeParent?.(e);
 	};
 
+	const passwordVisibilityChange = () => {
+		setVisible(!visible);
+	};
+
 	return (
 		<div className={"text-box" + (icon == undefined ? " unIcon" : "")}>
 			<input
 				id={name}
-				type={type == "number" ? "input" : type}
+				type={type == "number" ? "input" : type == "password" && visible ? "text" : type}
 				{...register?.(
 					name,
 					required == true ? { required: true } : { required: false }
@@ -83,22 +88,18 @@ export const Input = ({
 				style={
 					icon == undefined
 						? { padding: "0px 0px 0px 5px" }
-						: { padding: "0px 0px 0px 40px" }
+						: { padding: "0px 25px 0px 5px" }
 				}
 				className={(valueInput ? " has-value" : "") + (error ? " invalid" : "")}
 			/>
-			<span
-				style={
-					icon == undefined ? { display: "none" } : { display: "inline-block" }
-				}
-				className="material-symbols-outlined"
-			>
-				{icon}
-			</span>
-			<label
-				htmlFor={name}
-				style={icon == undefined ? { left: "0px" } : { left: "40px" }}
-			>
+			{type !== "password" ? (
+				<span className="material-symbols-outlined">{icon}</span>
+			) : (
+				<span className="material-symbols-outlined" onClick={passwordVisibilityChange}>
+					{visible ? "visibility" : "visibility_off"}
+				</span>
+			)}
+			<label htmlFor={name} style={{ left: "5px" }}>
 				{label}
 			</label>
 		</div>

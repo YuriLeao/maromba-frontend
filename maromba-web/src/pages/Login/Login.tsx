@@ -42,7 +42,6 @@ export function Login() {
                     clearErrors={clearErrors}
                     type='email'
                     label='Email'
-                    icon='mail'
                     required={true}
                     error={errors.emailInput ? true : false} />
                 <Input
@@ -52,7 +51,6 @@ export function Login() {
                     clearErrors={clearErrors}
                     type='password'
                     label='Senha'
-                    icon='lock'
                     required={true}
                     error={errors.passwordInput ? true : false} />
                 <button
