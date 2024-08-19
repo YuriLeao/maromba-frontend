@@ -1,9 +1,4 @@
-import React, {
-	useState,
-	useRef,
-	useEffect,
-	LegacyRef,
-} from "react";
+import React, { useState, useRef, useEffect, LegacyRef } from "react";
 import "./DatePicker.css";
 import "../ComponentsStyle.css";
 import {
@@ -25,7 +20,7 @@ interface CalendarProps {
 	onPrevYearPage: () => void;
 	isYearListOpen: boolean;
 	toggleYearList: () => void;
-	yearsDivRef: LegacyRef<HTMLDivElement> | undefined;
+	yearsDivRef: React.RefObject<HTMLDivElement>;
 }
 
 const Calendar = ({
@@ -203,7 +198,6 @@ export const DatePicker = ({
 	value,
 	clearErrors,
 }: Props) => {
-
 	let date;
 	let dateFake = "";
 	if (value instanceof Date) {
@@ -212,17 +206,27 @@ export const DatePicker = ({
 	} else {
 		const dateNow = new Date();
 		dateFake = value === undefined ? "" : value;
-		value = value === undefined ? dateNow.getDate() + "/" + (dateNow.getMonth()) + "/" + dateNow.getFullYear() : value;
-		const [day, month, year] = value.split("/");
-		const formattedDate = `${Number.parseInt(year)}-${Number.parseInt(month)}-${Number.parseInt(day)}`;
-		date = value === "" ? null : new Date(formattedDate);
+		const [day, month, year] =
+			value === undefined
+				? (
+						dateNow.getDate() +
+						"/" +
+						dateNow.getMonth() +
+						"/" +
+						dateNow.getFullYear()
+				  ).split("/")
+				: value.split("/");
+		const formattedDate = `${Number.parseInt(year)}-${Number.parseInt(
+			month
+		)}-${Number.parseInt(day)}`;
+		date = value == undefined || value === "" ? null : new Date(formattedDate);
 	}
-	setValue(name, value);
+
 	const [selectedDate, setSelectedDate] = useState<Date | null>(date);
-	const [selectedFakeDate, setSelectedFakeDate] = useState<Date | null>(date);
+	const [selectedFakeDate, setSelectedFakeDate] = useState<Date | null>(date ?? new Date());
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-	const [currentMonth, setCurrentMonth] = useState(date?.getMonth() ?? 0);
-	const [currentYear, setCurrentYear] = useState(date?.getFullYear() ?? 0);
+	const [currentMonth, setCurrentMonth] = useState(date?.getMonth() ?? new Date().getMonth());
+	const [currentYear, setCurrentYear] = useState(date?.getFullYear() ?? new Date().getFullYear());
 	const [yearPage, setYearPage] = useState(
 		Math.floor((new Date().getFullYear() - 1900) / 8)
 	);
@@ -234,9 +238,17 @@ export const DatePicker = ({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [inputValue, setInputValue] = useState(dateFake);
 
+	useEffect(() => {
+		if (date) {
+			setValue(name, date);
+		}
+	}, [date, setValue, name]);
+
 	const toggleCalendar = () => {
 		setIsCalendarOpen(!isCalendarOpen);
-		setYearPage(Math.floor((selectedFakeDate ?? new Date()).getFullYear() - 1950) / 8);
+		setYearPage(
+			Math.floor((selectedFakeDate ?? new Date()).getFullYear() - 1950) / 8
+		);
 	};
 
 	const handleDateClick = (date: Date) => {
@@ -477,7 +489,7 @@ export const DatePicker = ({
 					onChange={handleDateChange}
 					className={
 						"input-un-icon " +
-						(selectedDate || value ? " has-value" : "") +
+						(selectedDate ? " has-value" : "") +
 						(error ? " invalid" : "")
 					}
 					value={inputValue}

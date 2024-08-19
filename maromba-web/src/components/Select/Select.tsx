@@ -35,12 +35,16 @@ export function Select<T extends Item>({
 	value,
 	clearErrors,
 }: Props<T>) {
-	value = value || { id: "", description: "" };
-	setValue(name, value)
-	const [inputValue, setInputValue] = useState(value.description);
+	const [inputValue, setInputValue] = useState(value?.description || "");
 	const [isOpen, setIsOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const listRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (value) {
+			setValue(name, value);
+		}
+	}, [value, setValue, name]);
 
 	const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
 		e.stopPropagation();

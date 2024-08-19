@@ -38,13 +38,17 @@ export function AutoComplete<T extends Item>({
 	value,
 	clearErrors,
 }: Props<T>) {
-	value = value || { id: "", name: "" };
-	setValue(name, value);
-	const [inputValue, setInputValue] = useState(value.name);
+	const [inputValue, setInputValue] = useState(value?.name || "");
 	const [filterSearch, setFilterSearch] = useState<Item[]>(list);
 	const [isOpen, setIsOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const listRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (value) {
+			setValue(name, value);
+		}
+	}, [value, setValue, name]);
 
 	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		clearErrors(name);
