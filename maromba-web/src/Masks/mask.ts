@@ -38,12 +38,17 @@ export const cpfMask = (value: string) => {
 };
 
 export const numberMask = (value: string) => {
-	return value.replace(/[^0-9,]|(,\d{4,})/g, (match) => {
-		if (match.startsWith(",")) {
-			// Se o match for uma vírgula seguida de mais de 3 dígitos, retorna apenas os primeiros 3 dígitos
-			return match.slice(0, 4);
-		}
-		// Se o match não for um número ou uma vírgula válida, retorna uma string vazia
-		return "";
-	});
-};
+	value = value.replace(/[^0-9,]/g, "");
+  
+	const parts = value.split(",");
+	if (parts.length > 2) {
+	  value = `${parts[0]},${parts.slice(1).join("")}`;
+	}
+  
+	if (parts[1]?.length > 3) {
+	  value = `${parts[0]},${parts[1].substring(0, 3)}`;
+	}
+  
+	return value;
+  };
+  
