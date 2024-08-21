@@ -426,9 +426,14 @@ export const DatePicker = ({
 				calendarRef.current.style.top = inputRect.bottom + "px";
 			} else {
 				calendarRef.current.style.top =
-					inputRect.top - calendarRef.current.offsetHeight - 15 + "px";
+					inputRect.top - calendarRef.current.offsetHeight - 20 + "px";
 			}
-			calendarRef.current.style.left = inputRect.left + "px";
+
+			let marginLeft = 5;
+			if(inputRect.width <  150) {
+				marginLeft = 55;
+			} 
+			calendarRef.current.style.left = (inputRect.left - marginLeft) + "px";
 		}
 	}
 
