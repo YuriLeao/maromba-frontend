@@ -143,19 +143,19 @@
 
 @media (width <=700px) {
     .calendar-day {
-        font-size: 0.65rem;
+        font-size: 0.65rem !important;
     }
 
     .calendar-day-name {
-        font-size: 0.65rem;
+        font-size: 0.65rem !important;
     }
 
     .calendar-month span {
-        font-size: 0.8rem;
+        font-size: 0.8rem !important;
     }
 
     .calendar-header {
-        font-size: 0.8rem;
+        font-size: 0.8rem !important;
     }
 
     .text-box .material-symbols-outlined {

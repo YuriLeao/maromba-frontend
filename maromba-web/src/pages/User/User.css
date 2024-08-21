@@ -56,6 +56,12 @@
 	}
 }
 
+@media (width <= 425px) {
+	.buttons-div {
+		display: contents !important;
+	}
+}
+
 .buttons-div {
   gap: 30px;
   display: flex;
