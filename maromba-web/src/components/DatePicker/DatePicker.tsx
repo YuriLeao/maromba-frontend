@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect, LegacyRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./DatePicker.css";
 import "../ComponentsStyle.css";
+import { validateDate } from "../Validate";
 import {
 	UseFormClearErrors,
 	UseFormRegister,
@@ -337,7 +338,11 @@ export const DatePicker = ({
 				setCurrentYear(year);
 			}
 
-			setValue(name, date);
+			if (input.length == 10) {
+				setValue(name, date);
+			} else {
+				setValue(name, undefined);
+			}
 			setSelectedDate(date);
 			setSelectedFakeDate(date ? date : new Date());
 			setIsCalendarOpen(true);
@@ -430,10 +435,10 @@ export const DatePicker = ({
 			}
 
 			let marginLeft = 5;
-			if(inputRect.width <  150) {
+			if (inputRect.width < 150) {
 				marginLeft = 55;
-			} 
-			calendarRef.current.style.left = (inputRect.left - marginLeft) + "px";
+			}
+			calendarRef.current.style.left = inputRect.left - marginLeft + "px";
 		}
 	}
 
@@ -496,10 +501,11 @@ export const DatePicker = ({
 				<input
 					id={name}
 					type="input"
-					{...register(
-						name,
-						required == true ? { required: true } : { required: false }
-					)}
+					{...register(name, {
+						required: required === true ? true : false,
+						minLength: 10,
+						validate: validateDate,
+					})}
 					onChange={handleDateChange}
 					className={
 						(selectedDate ? " has-value" : "") + (error ? " invalid" : "")

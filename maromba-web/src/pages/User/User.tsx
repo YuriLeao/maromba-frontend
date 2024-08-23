@@ -252,6 +252,7 @@ export function User() {
 						register={register}
 						type="cpf"
 						label="CPF"
+						minLength={14}
 						setValue={setValue}
 						value={getValues("cpf")}
 						clearErrors={clearErrors}
@@ -274,6 +275,7 @@ export function User() {
 						register={register}
 						type="phone"
 						label="Celular"
+						minLength={15}
 						setValue={setValue}
 						value={getValues("phoneNumber")}
 						clearErrors={clearErrors}
@@ -296,6 +298,7 @@ export function User() {
 						register={register}
 						type="number"
 						label="Peso"
+						minLength={2}
 						setValue={setValue}
 						value={getValues("weight")}
 						clearErrors={clearErrors}

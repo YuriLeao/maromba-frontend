@@ -1,11 +1,10 @@
-import { useEffect, useInsertionEffect, useState } from "react";
+import { useState } from "react";
 import { cpfMask, numberMask, phoneMask } from "../../Masks/mask";
 import "./Input.css";
 import "../ComponentsStyle.css";
+import { validateCPF } from "../Validate";
 import {
-	FieldValues,
 	UseFormClearErrors,
-	UseFormGetValues,
 	UseFormRegister,
 	UseFormSetValue,
 } from "react-hook-form";
@@ -32,6 +31,7 @@ interface Props {
 	value?: any;
 	clearErrors?: UseFormClearErrors<any>;
 	onChangeParent?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	minLength?: number;
 }
 
 export const Input = ({
@@ -46,6 +46,7 @@ export const Input = ({
 	required,
 	clearErrors,
 	onChangeParent,
+	minLength = 0
 }: Props) => {
 	const [valueInput, setValueInput] = useState(value);
 	const [visible, setVisible] = useState(false);
@@ -79,11 +80,28 @@ export const Input = ({
 		<div className={"text-box" + (icon == undefined ? " unIcon" : "")}>
 			<input
 				id={name}
-				type={type == "number" ? "input" : type == "password" && visible ? "text" : type}
-				{...register?.(
-					name,
-					required == true ? { required: true } : { required: false }
-				)}
+				type={
+					type == "number"
+						? "input"
+						: type == "password" && visible
+						? "input"
+						: type == "email" ? "input" : type
+				}
+				{...register?.(name, {
+					required: required === true ? true : false,
+					minLength: {
+						value: minLength,
+						message: "O campo deve ter no mínimo 3 caracteres",
+					},
+					validate: type === "cpf" ? validateCPF : undefined,
+					pattern:
+						type === "email"
+							? {
+									value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+									message: "E-mail inválido",
+							  }
+							: undefined,
+				})}
 				onChange={(e) => onChange(e, name, type)}
 				style={
 					icon == undefined
@@ -95,7 +113,10 @@ export const Input = ({
 			{type !== "password" ? (
 				<span className="material-symbols-outlined">{icon}</span>
 			) : (
-				<span className="material-symbols-outlined" onClick={passwordVisibilityChange}>
+				<span
+					className="material-symbols-outlined"
+					onClick={passwordVisibilityChange}
+				>
 					{visible ? "visibility" : "visibility_off"}
 				</span>
 			)}
