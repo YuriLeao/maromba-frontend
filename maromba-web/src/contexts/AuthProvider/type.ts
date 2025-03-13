@@ -1,7 +1,7 @@
+import { UserModel } from "../../models/UserModel";
+
 export interface IUser {
-    email?: string;
-    token?: string;
-    empresaId?: string;
+    user?: UserModel | undefined;
 }
 
 export interface IContext extends IUser {

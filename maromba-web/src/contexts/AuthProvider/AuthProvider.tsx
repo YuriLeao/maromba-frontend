@@ -12,10 +12,11 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
     async function authenticate(email: string, password: string) {
         const response = await userService.login(email, password);
 
-        const payload = { token: response.token, email: response.email, empresaId: response.companyId, authorizations: response.authorizations};
+        let userResponse:IUser = {};
+        userResponse.user = response;
 
-        setUser(payload);
-        setUserLocalStorage(payload);
+        setUser(userResponse);
+        setUserLocalStorage(userResponse);
     }
 
     function logout() {
