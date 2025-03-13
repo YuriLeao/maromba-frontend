@@ -2,20 +2,29 @@ import "./Menu.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider/UseAuth";
 import { useState } from "react";
+import { getUserLocalStorage } from "../../contexts/AuthProvider/util";
 
 export function Menu() {
     const auth = useAuth();
+    const userLocal = getUserLocalStorage();
     const navigate = useNavigate();
 
-    let [openCloseMenu, setopenCloseMenu] = useState<string>("contents");
+    let [openCloseMenu, setOpenCloseMenu] = useState<string>("contents");
 
     const loggout = () => {
         auth.logout();
         navigate("/");
     };
 
+    const handleClickConfigUser = () => {
+        navigate("/menu/user", {
+            state: { titlePage: "Editar usuário", labelButton: "Editar", userEdit: userLocal, disableBack: true },
+        });
+    };
+    
+
     const openCloseMenuClick = () => {
-        setopenCloseMenu(openCloseMenu === "contents" ? "contents open-close-menu" : "contents");
+        setOpenCloseMenu(openCloseMenu === "contents" ? "contents open-close-menu" : "contents");
     };
 
     return (
@@ -26,13 +35,15 @@ export function Menu() {
 
                         <header className="sidebar-header">
                             <img className="logo-img" src="/src/assets/img/logo.png" />
-                            <img className="logo-icon" src="/src/assets/img/logo.png" />
-                            <h1 className="ml14">MarombaApp</h1>
+                            <h1 className="name-company">MarombaApp</h1>
                         </header>
                         <nav>
                             <div className="profile">
                                 <img className="avatar" src="../../src/assets/img/avatar.png"></img>
-                                <div className="user-name">Yuri</div>
+                                <div className="user pointer"  onClick={handleClickConfigUser}>
+                                    <div className="user-name">{userLocal?.name}</div>
+                                    <i className="material-symbols-outlined icon-config">settings_account_box</i>
+                                </div>
                             </div>
                             <button onClick={(e) => navigate("/menu/users")}>
                                 <span>
