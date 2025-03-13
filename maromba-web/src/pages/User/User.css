@@ -12,6 +12,8 @@
 	align-items: center;
 	overflow: hidden;
 	min-width: 235px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .panel > h2 {
@@ -35,7 +37,7 @@
 	margin: 0;
 	gap: 5px;
 	overflow-y: auto;
-	padding: 30px 30px;
+	padding: 20px 30px;
 }
 
 @media (width <= 1230px) {
