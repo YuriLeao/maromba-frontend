@@ -33,7 +33,7 @@
     text-align: center;
     border-radius: 5px;
     display: grid;
-    background: #3E065F;
+    background: #8e05c2;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
 
@@ -116,7 +116,7 @@
 }
 
 .calendar-day:hover {
-    background: #3E065F;
+    background: #8e05c2;
 }
 
 .calendar-day-name {
@@ -133,7 +133,7 @@
 }
 
 .day-selected {
-    background: #3E065F;
+    background: #8e05c2;
 }
 
 .empty-day {

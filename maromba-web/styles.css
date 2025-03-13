@@ -16,8 +16,7 @@ body {
 	display: grid;
 	place-items: center;
 	margin: 0;
-	background: linear-gradient(135deg, #161616, #3e065f, #700b97, #8e05c2)
-		#700b97;
+		background: linear-gradient(135deg, #161616, #3e065f, #700b97, #700b97, #8e05c2);
 	background-size: 300%;
 	animation: colors 10s ease infinite;
 	color: #f9f9f9;
@@ -111,7 +110,7 @@ h1 {
 	padding: 10px 20px;
 	color: white;
 	margin-top: 15px;
-	background-color: #700b97;
+	background-color: #8e05c2;
 	width: auto !important;
 	height: auto;
 	font-size: 18px;
@@ -137,7 +136,7 @@ h1 {
 	font-size: 18px;
 	border-radius: 8px;
 	cursor: pointer;
-	border: 1px solid #700b97;
+	border: 1px solid #8e05c2;
 	font-weight: 600;
 	box-shadow: rgb(0 0 0 / 50%) 0px 0px 20px;
 }

@@ -46,7 +46,7 @@
 }
 
 .text-box input:focus {
-	border-color: #3e065f;
+	border-color: #8e05c2;
 }
 
 .text-box > :is(input:focus, input.has-value) ~ label {
@@ -150,7 +150,7 @@ input::-webkit-inner-spin-button {
 }
 
 .list-item:hover {
-	background-color: #3e065f;
+	background-color: #8e05c2;
 }
 
 .right-icon {
