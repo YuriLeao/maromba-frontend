@@ -27,12 +27,14 @@ export function User() {
 	);
 
 	const navigate = useNavigate();
-	const userLogged = getUserLocalStorage();
+	const location = useLocation();
+	const userLocal = getUserLocalStorage();
 	const userService = new UserService();
 	const companyService = new CompanyService();
-	const titlePage = useLocation().state.titlePage;
-	const labelButton = useLocation().state.labelButton;
-	const userEdit = useLocation().state.userEdit;
+	const titlePage = location.state.titlePage;
+	const labelButton = location.state.labelButton;
+	const userEdit = location.state.userEdit;
+	const disableBack = location.state.disableBack || false;
 
 	let defaultValues: UserModel | undefined;
 	if (userEdit !== undefined) {
@@ -57,15 +59,22 @@ export function User() {
 		handleSubmit,
 		clearErrors,
 		setValue,
+		reset,
 		getValues,
 		formState: { errors },
 	} = useForm<UserModel>({ defaultValues });
 
 	useEffect(() => {
+		if (userEdit) {
+			reset(defaultValues);
+		}
+	}, [userEdit, reset]);
+
+	useEffect(() => {
 		const getAllGenders = async () => {
-			if (userLogged) {
+			if (userLocal) {
 				await userService
-					.getAllGenders(userLogged.token)
+					.getAllGenders(userLocal.token)
 					.then((response) => {
 						setGenders(response);
 					})
@@ -88,17 +97,15 @@ export function User() {
 		};
 
 		const getAllAuthorizations = async () => {
-			if (userLogged) {
+			if (userLocal) {
 				await userService
-					.getAllAuthorizations(userLogged.token)
+					.getAllAuthorizations(userLocal.token)
 					.then((response) => {
 						setAuthorizations(response);
 					})
 					.catch((error) => {
 						try {
-							if (error.response.status === 403) {
-								navigate("/");
-							}
+
 							throw error.response.data.error_message;
 						} catch (error) {
 							throw (
@@ -113,9 +120,9 @@ export function User() {
 		};
 
 		const getAllCompanys = async () => {
-			if (userLogged) {
+			if (userLocal) {
 				await companyService
-					.getAll(userLogged.token)
+					.getAll(userLocal.token)
 					.then((response) => {
 						setCompanys(response.content);
 					})
@@ -162,17 +169,17 @@ export function User() {
 				typeof form.birthDate === "string"
 					? form.birthDate
 					: (() => {
-							const date = new Date(form.birthDate);
-							return `${date.getDate().toString().padStart(2, "0")}/${(
-								date.getMonth() + 1
-							)
-								.toString()
-								.padStart(2, "0")}/${date.getFullYear()}`;
-					  })(),
+						const date = new Date(form.birthDate);
+						return `${date.getDate().toString().padStart(2, "0")}/${(
+							date.getMonth() + 1
+						)
+							.toString()
+							.padStart(2, "0")}/${date.getFullYear()}`;
+					})(),
 			email: form.email,
 			token: "",
 		};
-		
+
 		if (userEdit !== undefined) {
 			console.log(user);
 			update(user);
@@ -182,9 +189,9 @@ export function User() {
 	};
 
 	const update = async (user: UserModel) => {
-		if (userLogged) {
+		if (userLocal) {
 			await userService
-				.update(user, userLogged.token)
+				.update(user, userLocal.token)
 				.then((response) => {
 					navigate("/menu/users");
 				})
@@ -207,9 +214,9 @@ export function User() {
 	};
 
 	const save = async (user: UserModel) => {
-		if (userLogged) {
+		if (userLocal) {
 			await userService
-				.save(user, userLogged.token)
+				.save(user, userLocal.token)
 				.then((response) => {
 					navigate("/menu/users");
 				})
@@ -339,13 +346,13 @@ export function User() {
 						error={errors.company ? true : false}
 					/>
 					<div className="buttons-div">
-						<button
+						{!disableBack && (<button
 							className="second-button"
 							title="Voltar"
 							onClick={() => navigate("/menu/users")}
 						>
 							Voltar
-						</button>
+						</button>)}
 						<button type="submit" className="main-button">
 							{labelButton}
 						</button>

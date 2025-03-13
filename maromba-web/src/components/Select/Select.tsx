@@ -43,9 +43,13 @@ export function Select<T extends Item>({
 
 	useEffect(() => {
 		if (value) {
+			setInputValue(value.description);
 			setValue(name, value);
+		} else {
+			setInputValue("");
 		}
 	}, [value, setValue, name]);
+	
 
 	const handleSelectClick = (e: React.MouseEvent<HTMLInputElement>) => {
 		e.stopPropagation();

@@ -15,7 +15,7 @@ interface Column {
 
 export function Users() {
 	const navigate = useNavigate();
-	const user = getUserLocalStorage();
+	const userLocal = getUserLocalStorage();
 	const userService = new UserService();
 
 	const columns: Column[] = [
@@ -28,9 +28,9 @@ export function Users() {
 
 	useEffect(() => {
 		const getUsersByCompanyIdAuthorization = async () => {
-			if (user) {
+			if (userLocal) {
 				await userService
-					.getByCompanyIdAuthorization(user.empresaId, user.token)
+					.getByCompanyIdAuthorization(userLocal.companyId, userLocal.token)
 					.then((response) => {
 						setUsers(response.content);
 						setFilterSearch(response.content);
@@ -71,9 +71,9 @@ export function Users() {
 	};
 
 	const deleteUser = async (id: string) => {
-		if (user) {
+		if (userLocal) {
 			await userService
-				.delete(id, user.token)
+				.delete(id, userLocal.token)
 				.then((response) => {
 					setUsers((prevData) => prevData.filter((item) => item.id !== id));
 					setFilterSearch((prevData) => prevData.filter((item) => item.id !== id));

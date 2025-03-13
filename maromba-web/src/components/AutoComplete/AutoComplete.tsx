@@ -45,9 +45,8 @@ export function AutoComplete<T extends Item>({
 	const listRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (value) {
-			setValue(name, value);
-		}
+		setInputValue(value?.name || ""); // Atualiza o inputValue corretamente
+		setValue(name, value); // Mantém a sincronização com React Hook Form
 	}, [value, setValue, name]);
 
 	const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
