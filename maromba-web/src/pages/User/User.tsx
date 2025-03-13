@@ -105,7 +105,6 @@ export function User() {
 					})
 					.catch((error) => {
 						try {
-
 							throw error.response.data.error_message;
 						} catch (error) {
 							throw (
@@ -146,7 +145,6 @@ export function User() {
 
 		getAllAuthorizations();
 		getAllGenders();
-
 		getAllCompanys();
 	}, []);
 
@@ -169,13 +167,13 @@ export function User() {
 				typeof form.birthDate === "string"
 					? form.birthDate
 					: (() => {
-						const date = new Date(form.birthDate);
-						return `${date.getDate().toString().padStart(2, "0")}/${(
-							date.getMonth() + 1
-						)
-							.toString()
-							.padStart(2, "0")}/${date.getFullYear()}`;
-					})(),
+							const date = new Date(form.birthDate);
+							return `${date.getDate().toString().padStart(2, "0")}/${(
+								date.getMonth() + 1
+							)
+								.toString()
+								.padStart(2, "0")}/${date.getFullYear()}`;
+					  })(),
 			email: form.email,
 			token: "",
 		};
@@ -346,13 +344,15 @@ export function User() {
 						error={errors.company ? true : false}
 					/>
 					<div className="buttons-div">
-						{!disableBack && (<button
-							className="second-button"
-							title="Voltar"
-							onClick={() => navigate("/menu/users")}
-						>
-							Voltar
-						</button>)}
+						{!disableBack && (
+							<button
+								className="second-button"
+								title="Voltar"
+								onClick={() => navigate("/menu/users")}
+							>
+								Voltar
+							</button>
+						)}
 						<button type="submit" className="main-button">
 							{labelButton}
 						</button>
