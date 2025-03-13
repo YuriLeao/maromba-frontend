@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./DatePicker.css";
 import "../ComponentsStyle.css";
 import { validateDate } from "../Validate";
@@ -10,11 +10,11 @@ import {
 
 interface CalendarProps {
 	onDateClick: (date: Date) => void;
+	currentDay?: number;
 	currentMonth: number;
 	currentYear: number;
-	selectedFakeDate: Date | null;
-	onNextMonth: () => void;
-	onPrevMonth: () => void;
+	onNextMonth: VoidFunction;
+	onPrevMonth: VoidFunction;
 	onYearSelect: (year: number) => void;
 	yearPage: number;
 	onNextYearPage: () => void;
@@ -22,13 +22,29 @@ interface CalendarProps {
 	isYearListOpen: boolean;
 	toggleYearList: () => void;
 	yearsDivRef: React.RefObject<HTMLDivElement>;
+	closeYearList: () => void;
 }
+const MONTHS = [
+	{ id: 1, value: "Janeiro" },
+	{ id: 2, value: "Fevereiro" },
+	{ id: 3, value: "Março" },
+	{ id: 4, value: "Abril" },
+	{ id: 5, value: "Maio" },
+	{ id: 6, value: "Junho" },
+	{ id: 7, value: "Julho" },
+	{ id: 8, value: "Agosto" },
+	{ id: 9, value: "Setembro" },
+	{ id: 10, value: "Outubro" },
+	{ id: 11, value: "Novembro" },
+	{ id: 12, value: "Dezembro" },
+];
+const DAYSOFWEEK = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
 const Calendar = ({
 	onDateClick,
+	currentDay,
 	currentMonth,
 	currentYear,
-	selectedFakeDate,
 	onNextMonth,
 	onPrevMonth,
 	onYearSelect,
@@ -38,24 +54,29 @@ const Calendar = ({
 	isYearListOpen,
 	toggleYearList,
 	yearsDivRef,
+	closeYearList,
 }: CalendarProps) => {
-	const months = [
-		{ id: 1, value: "Janeiro" },
-		{ id: 2, value: "Fevereiro" },
-		{ id: 3, value: "Março" },
-		{ id: 4, value: "Abril" },
-		{ id: 5, value: "Maio" },
-		{ id: 6, value: "Junho" },
-		{ id: 7, value: "Julho" },
-		{ id: 8, value: "Agosto" },
-		{ id: 9, value: "Setembro" },
-		{ id: 10, value: "Outubro" },
-		{ id: 11, value: "Novembro" },
-		{ id: 12, value: "Dezembro" },
-	];
-	const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 	const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 	const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+
+	useEffect(() => {
+		const handleYearListClick = (e: MouseEvent) => {
+			if (
+				yearsDivRef.current &&
+				!yearsDivRef.current.contains(e.target as Node)
+			) {
+				closeYearList();
+			}
+		};
+
+		if (isYearListOpen) {
+			document.addEventListener("mousedown", handleYearListClick);
+		}
+
+		return () => {
+			document.removeEventListener("mousedown", handleYearListClick);
+		};
+	}, [isYearListOpen, closeYearList]);
 
 	const generateCalendar = () => {
 		const calendarDays = [];
@@ -69,9 +90,7 @@ const Calendar = ({
 			calendarDays.push(
 				<div
 					key={`day-${currentYear}-${currentMonth}-${day}`}
-					className={`calendar-day ${
-						day == selectedFakeDate?.getDate() ? " day-selected" : ""
-					}`}
+					className={`calendar-day ${day == currentDay ? "day-selected" : ""}`}
 					onClick={() => onDateClick(new Date(currentYear, currentMonth, day))}
 				>
 					{day}
@@ -154,9 +173,7 @@ const Calendar = ({
 						{"keyboard_arrow_left"}
 					</span>
 				</div>
-				<span>{`${
-					months[currentMonth] ? months[currentMonth].value : ""
-				}`}</span>
+				<span>{MONTHS[currentMonth]?.value || ""}</span>
 				<div className="calendar-years-left-right">
 					<span
 						className="material-symbols-outlined right pointer"
@@ -167,7 +184,7 @@ const Calendar = ({
 				</div>
 			</div>
 			<div className="calendar-grid">
-				{daysOfWeek.map((day, index) => (
+				{DAYSOFWEEK.map((day, index) => (
 					<div key={index} className="calendar-day-name">
 						{day}
 					</div>
@@ -185,7 +202,7 @@ interface Props {
 	error: boolean;
 	required?: boolean;
 	setValue: UseFormSetValue<any>;
-	value: any;
+	value: Date | string | undefined;
 	clearErrors: UseFormClearErrors<any>;
 }
 
@@ -199,41 +216,10 @@ export const DatePicker = ({
 	value,
 	clearErrors,
 }: Props) => {
-	let date;
-	let dateFake = "";
-	if (value instanceof Date) {
-		date = value;
-		dateFake = value.toLocaleDateString("pt-BR");
-	} else {
-		const dateNow = new Date();
-		dateFake = value === undefined ? "" : value;
-		const [day, month, year] =
-			value === undefined
-				? (
-						dateNow.getDate() +
-						"/" +
-						dateNow.getMonth() +
-						"/" +
-						dateNow.getFullYear()
-				  ).split("/")
-				: value.split("/");
-		const formattedDate = `${Number.parseInt(year)}-${Number.parseInt(
-			month
-		)}-${Number.parseInt(day)}`;
-		date = value == undefined || value === "" ? null : new Date(formattedDate);
-	}
-
-	const [selectedDate, setSelectedDate] = useState<Date | null>(date);
-	const [selectedFakeDate, setSelectedFakeDate] = useState<Date | null>(
-		date ?? new Date()
-	);
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-	const [currentMonth, setCurrentMonth] = useState(
-		date?.getMonth() ?? new Date().getMonth()
-	);
-	const [currentYear, setCurrentYear] = useState(
-		date?.getFullYear() ?? new Date().getFullYear()
-	);
+	const [currentDay, setCurrentDay] = useState<number>();
+	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+	const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 	const [yearPage, setYearPage] = useState(
 		Math.floor((new Date().getFullYear() - 1900) / 8)
 	);
@@ -244,28 +230,92 @@ export const DatePicker = ({
 	const yearsDivRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const iconRef = useRef<HTMLSpanElement>(null);
-	const [inputValue, setInputValue] = useState(dateFake);
+	const [inputValue, setInputValue] = useState<string>('');
 
 	useEffect(() => {
-		if (date) {
-			setValue(name, date);
+		let newDate: Date | null = null;
+		let newDateFake = "";
+	  
+		if (value instanceof Date && !isNaN(value.getTime())) {
+		  newDate = value;
+		  newDateFake = value.toLocaleDateString("pt-BR");
+		} else if (typeof value === "string" && value) {
+		  const [day, month, year] = value.split("/");
+		  const parsedDay = parseInt(day, 10);
+		  const parsedMonth = parseInt(month, 10) - 1;
+		  const parsedYear = parseInt(year, 10);
+	  
+		  newDate = new Date(parsedYear, parsedMonth, parsedDay);
+		  newDateFake = !isNaN(newDate.getTime()) ? value : "";
+		} else {
+		  newDateFake = "";
 		}
-	}, [date, setValue, name]);
+	  
+		setInputValue(newDateFake || ''); 
+
+		if (newDate && !isNaN(newDate.getTime())) {
+			setCurrentDay(newDate.getDate());
+			setCurrentMonth(newDate.getMonth());
+			setCurrentYear(newDate.getFullYear());
+		} else {
+			const currentDate = new Date();
+			setCurrentDay(currentDate.getDate());
+			setCurrentMonth(currentDate.getMonth());
+			setCurrentYear(currentDate.getFullYear());
+		}
+	}, [value]);
+
+	const handleCloseYearList = useCallback(() => {
+		setIsYearListOpen(false);
+	}, []);
+
+	const effectiveDay =
+		inputValue &&
+		parseInt(inputValue.split("/")[1]) - 1 === currentMonth &&
+		parseInt(inputValue.split("/")[2]) === currentYear
+			? parseInt(inputValue.split("/")[0])
+			: new Date().getMonth() === currentMonth &&
+			  new Date().getFullYear() === currentYear
+			? new Date().getDate()
+			: undefined;
 
 	const toggleCalendar = () => {
-		setIsCalendarOpen(!isCalendarOpen);
-		setYearPage(
-			Math.floor((selectedFakeDate ?? new Date()).getFullYear() - 1950) / 8
-		);
+		setIsCalendarOpen((prev) => {
+			const willOpen = !prev;
+
+			if (willOpen) {
+				let currentDate;
+				if (value instanceof Date) {
+					currentDate = value;
+				} else if (typeof value === "string" && value !== "") {
+					const [day, month, year] = value.split("/");
+					const parsedDay = parseInt(day, 10);
+					const parsedMonth = parseInt(month, 10) - 1;
+					const parsedYear = parseInt(year, 10);
+
+					currentDate = new Date(parsedYear, parsedMonth, parsedDay);
+				} else {
+					currentDate = new Date();
+				}
+				setCurrentDay(currentDate.getDate());
+				setCurrentMonth(currentDate.getMonth());
+				setCurrentYear(currentDate.getFullYear());
+				setYearPage(Math.floor((currentDate.getFullYear() - 1950) / 8));
+			}
+
+			return willOpen;
+		});
 	};
 
 	const handleDateClick = (date: Date) => {
 		clearErrors(name);
-		setSelectedDate(date);
-		setSelectedFakeDate(date);
-		setInputValue(date.toLocaleDateString("pt-BR"));
+		const formattedDate = date.toLocaleDateString("pt-BR");
+		setInputValue(formattedDate);
 		setIsCalendarOpen(false);
 		setValue(name, date);
+		setCurrentDay(date.getDate());
+		setCurrentMonth(date.getMonth());
+		setCurrentYear(date.getFullYear());
 	};
 
 	const validateInput = (input: string): string => {
@@ -316,21 +366,20 @@ export const DatePicker = ({
 		const dateParts = input.split("/").map((part) => parseInt(part, 10));
 
 		if (input.length >= 1) {
-			const [day, month, year] = dateParts;
+			let day = dateParts[0];
+			let month = dateParts[1] ? dateParts[1] - 1 : new Date().getMonth();
+			let year = dateParts[2];
 
 			const date = new Date();
 
 			if (!isNaN(day)) {
 				date.setDate(day);
+				setCurrentDay(day);
 			}
 
 			if (!isNaN(month)) {
-				let monthUpdate = 0;
-				if (month > 0) {
-					monthUpdate = month - 1;
-				}
-				date.setMonth(monthUpdate);
-				setCurrentMonth(monthUpdate);
+				date.setMonth(month);
+				setCurrentMonth(month);
 			}
 
 			if (!isNaN(year)) {
@@ -338,15 +387,14 @@ export const DatePicker = ({
 				setCurrentYear(year);
 			}
 
-			if (input.length == 10) {
+			if (input.length === 10) {
 				setValue(name, date);
 			} else {
 				setValue(name, undefined);
 			}
-			setSelectedDate(date);
-			setSelectedFakeDate(date ? date : new Date());
+
 			setIsCalendarOpen(true);
-			setYearPage(Math.floor((date.getFullYear() - 1950) / 9));
+			setYearPage(Math.floor((date.getFullYear() - 1950) / 8));
 		}
 
 		setInputValue(input);
@@ -396,18 +444,12 @@ export const DatePicker = ({
 	};
 
 	const handleClickOutside = (event: MouseEvent) => {
-		if (isClickingInsideYearList) {
-			setIsClickingInsideYearList(false);
-			return;
-		}
+		const target = event.target as Node;
 
 		if (
-			inputRef.current &&
-			!inputRef.current.contains(event.target as Node) &&
-			calendarRef.current &&
-			!calendarRef.current.contains(event.target as Node) &&
-			iconRef.current &&
-			!iconRef.current.contains(event.target as Node)
+			!inputRef.current?.contains(target) &&
+			!calendarRef.current?.contains(target) &&
+			!iconRef.current?.contains(target)
 		) {
 			setIsCalendarOpen(false);
 			setIsYearListOpen(false);
@@ -422,78 +464,34 @@ export const DatePicker = ({
 		};
 	}, [isClickingInsideYearList]);
 
-	function updateOptionsPosition() {
-		if (calendarRef.current != null && inputRef.current != null) {
-			var inputRect = inputRef.current.getBoundingClientRect();
-			var optionsHeight = calendarRef.current.offsetHeight;
-			var viewportHeight = window.innerHeight;
-			if (viewportHeight - inputRect.bottom >= optionsHeight) {
-				calendarRef.current.style.top = inputRect.bottom + "px";
-			} else {
-				calendarRef.current.style.top =
-					inputRect.top - calendarRef.current.offsetHeight - 20 + "px";
-			}
-
-			let marginLeft = 5;
-			if (inputRect.width < 150) {
-				marginLeft = 55;
-			}
-			calendarRef.current.style.left = inputRect.left - marginLeft + "px";
-		}
-	}
-
 	useEffect(() => {
-		if (
-			inputRef.current != null &&
-			inputRef.current.parentElement != null &&
-			inputRef.current.parentElement.parentElement != null
-		) {
-			if (isCalendarOpen) {
-				updateOptionsPosition();
-				inputRef.current.parentElement.parentElement.addEventListener(
-					"scroll",
-					updateOptionsPosition
-				);
-				inputRef.current.parentElement.parentElement.addEventListener(
-					"resize",
-					updateOptionsPosition
-				);
-				window.addEventListener("scroll", updateOptionsPosition);
-				window.addEventListener("resize", updateOptionsPosition);
-			} else {
-				inputRef.current.parentElement.parentElement.removeEventListener(
-					"scroll",
-					updateOptionsPosition
-				);
-				inputRef.current.parentElement.parentElement.removeEventListener(
-					"resize",
-					updateOptionsPosition
-				);
-				window.removeEventListener("scroll", updateOptionsPosition);
-				window.removeEventListener("resize", updateOptionsPosition);
-			}
-		}
-		return () => {
-			{
-				if (
-					inputRef.current != null &&
-					inputRef.current.parentElement != null &&
-					inputRef.current.parentElement.parentElement != null
-				) {
-					inputRef.current.parentElement.parentElement.removeEventListener(
-						"scroll",
-						updateOptionsPosition
-					);
-					inputRef.current.parentElement.parentElement.removeEventListener(
-						"resize",
-						updateOptionsPosition
-					);
-				}
-				window.removeEventListener("scroll", updateOptionsPosition);
-				window.removeEventListener("resize", updateOptionsPosition);
-			}
+		if (!isCalendarOpen || !calendarRef.current) return;
+	  
+		const updatePosition = () => {
+		  const inputRect = inputRef.current?.getBoundingClientRect();
+		  if (!inputRect || !calendarRef.current) return;
+	  
+		  const viewportHeight = window.innerHeight;
+		  const calendarHeight = calendarRef.current.offsetHeight;
+	  
+		  const newTopPosition = 
+			viewportHeight - inputRect.bottom >= calendarHeight
+			  ? inputRect.bottom
+			  : inputRect.top - calendarHeight - 20;
+	  
+		  calendarRef.current.style.top = `${newTopPosition}px`;
+		  calendarRef.current.style.left = `${inputRect.left}px`;
 		};
-	}, [isCalendarOpen]);
+	  
+		window.addEventListener("scroll", updatePosition, true);
+		window.addEventListener("resize", updatePosition);
+		updatePosition();
+	  
+		return () => {
+		  window.removeEventListener("scroll", updatePosition, true);
+		  window.removeEventListener("resize", updatePosition);
+		};
+	  }, [isCalendarOpen]);
 
 	return (
 		<>
@@ -508,7 +506,7 @@ export const DatePicker = ({
 					})}
 					onChange={handleDateChange}
 					className={
-						(selectedDate ? " has-value" : "") + (error ? " invalid" : "")
+						(inputValue ? " has-value" : "") + (error ? " invalid" : "")
 					}
 					style={{ padding: "0px 25px 0px 5px" }}
 					value={inputValue}
@@ -535,7 +533,7 @@ export const DatePicker = ({
 						onDateClick={handleDateClick}
 						currentMonth={currentMonth}
 						currentYear={currentYear}
-						selectedFakeDate={selectedFakeDate}
+						currentDay={effectiveDay}
 						onNextMonth={handleNextMonth}
 						onPrevMonth={handlePrevMonth}
 						onYearSelect={handleYearSelect}
@@ -545,6 +543,7 @@ export const DatePicker = ({
 						isYearListOpen={isYearListOpen}
 						toggleYearList={toggleYearList}
 						yearsDivRef={yearsDivRef}
+						closeYearList={handleCloseYearList}
 					/>
 				</div>
 			)}
