@@ -1,39 +1,16 @@
+import { ExerciseModel } from "../models/ExerciseModel";
 import { Pageable } from "../models/Pageable";
-import { UserModel } from "../models/UserModel";
 import { api } from "./api";
 
-export class UserService {
-	async login(email: string, password: string) {
+export class ExerciseService {
+	async getAll(token: string) {
 		try {
 			const response = await api
-				.get<UserModel>(`/user-service/login/${encodeURIComponent(email)}/${encodeURIComponent(password)}`)
-				.then((response) => {
-					return response.data;
+				.get<Pageable<ExerciseModel>>('/exercise-service/getAll', {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
 				})
-				.catch((error) => {
-					try {
-						throw error.response.data.mensagem;
-					} catch (errorGenerico) {
-						throw "Erro ao efetuar login, por favor tente novamente mais tarde.";
-					}
-				});
-			return response;
-		} catch (error) {
-			throw error;
-		}
-	}
-
-	async getByCompanyIdAuthorization(companyId: string, token: string) {
-		try {
-			const response = await api
-				.get<Pageable<UserModel>>(
-					`/user-service/getByCompanyIdAuthorization/${encodeURIComponent(companyId)}`,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				)
 				.then((response) => {
 					return response.data;
 				})
@@ -46,17 +23,14 @@ export class UserService {
 		}
 	}
 
-	async save(user: UserModel, token: string) {
+	async getById(id:string, token: string) {
 		try {
 			const response = await api
-				.post<string>(
-					"/user-service/save", user,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						}
-					}
-				)
+				.get<ExerciseModel>(`/exercise-service/getById/${encodeURIComponent(id)}`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				})
 				.then((response) => {
 					return response.data;
 				})
@@ -69,11 +43,32 @@ export class UserService {
 		}
 	}
 
-	async update(user: UserModel, token: string) {
+	async save(exercise: ExerciseModel, token: string) {
+		try {
+			const response = await api
+				.post<string>('/exercise-service/save', exercise,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					}
+				})
+				.then((response) => {
+					return response.data;
+				})
+				.catch((error) => {
+					throw error;
+				});
+			return response;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async update(exercise: ExerciseModel, token: string) {
 		try {
 			const response = await api
 				.put<string>(
-					`/user-service/update/${encodeURIComponent(user.id)}`, user,
+					`/exercise-service/update/${encodeURIComponent(exercise.id)}`, exercise,
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,
@@ -96,7 +91,7 @@ export class UserService {
 		try {
 			const response = await api
 				.delete<string>(
-					`/user-service/delete/${encodeURIComponent(id)}`,
+					`/exercise-service/delete/${encodeURIComponent(id)}`,
 					{
 						headers: {
 							Authorization: `Bearer ${token}`,

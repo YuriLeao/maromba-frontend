@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { cpfMask, numberMask, phoneMask } from "../../Masks/mask";
+import { cnpjMask, cpfMask, numberMask, phoneMask } from "../../Masks/mask";
 import "./Input.css";
 import "../ComponentsStyle.css";
-import { validateCPF } from "../Validate";
+import { validateCPF, validateCNPJ } from "../Validate";
 import {
 	UseFormClearErrors,
 	UseFormRegister,
@@ -16,6 +16,7 @@ interface Props {
 		| "text"
 		| "password"
 		| "cpf"
+		| "cnpj"
 		| "phone"
 		| "date"
 		| "select"
@@ -61,6 +62,8 @@ export const Input = ({
 			value = phoneMask(value);
 		} else if (type === "cpf") {
 			value = cpfMask(value);
+		} else if (type === "cnpj") {
+			value = cnpjMask(value);
 		} else if (type === "number") {
 			value = numberMask(value);
 		}
@@ -93,7 +96,7 @@ export const Input = ({
 						value: minLength,
 						message: "O campo deve ter no mínimo 3 caracteres",
 					},
-					validate: type === "cpf" ? validateCPF : undefined,
+					validate: type === "cpf" ? validateCPF : type === "cnpj" ? validateCNPJ : undefined,
 					pattern:
 						type === "email"
 							? {

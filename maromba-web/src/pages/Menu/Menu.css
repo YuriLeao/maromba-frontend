@@ -45,6 +45,14 @@
 	justify-items: unset;
 }
 
+.title-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+}
+
 .name-company {
 	display: unset;
 }
@@ -79,12 +87,11 @@
 }
 
 .icon-config {
-    transition: color 400ms ease-out;
+	transition: color 400ms ease-out;
 }
 
 .user:hover .icon-config {
-    color: #8e05c2;
-    scale: 1.2;
+	scale: 1.2;
 }
 
 .ml14 {
@@ -103,6 +110,7 @@
 	font-family: inherit;
 	color: inherit;
 	cursor: pointer;
+	text-align: left;
 }
 
 .sidebar button > span {
@@ -128,11 +136,15 @@
 }
 
 .sidebar button > span > span {
-	transition: 0.3s;
+	transition: 0.3s;	
 }
 
 .open-close-menu {
 	width: 100% !important;
+}
+
+.open-close-menu .user {
+	margin-top: 20px;
 }
 
 .open-close-menu .logo-img {
@@ -233,6 +245,14 @@
 		margin-bottom: 0;
 	}
 
+	.open-close-menu .user {
+		margin-top: 0px;
+	}
+
+	.user {
+		margin-top: 20px;
+	}
+
 	.user-name {
 		opacity: 0;
 		display: none;
@@ -253,7 +273,7 @@
 	.name-company {
 		display: none;
 	}
-	
+
 	.open-close-menu .name-company {
 		display: unset;
 	}

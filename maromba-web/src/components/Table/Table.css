@@ -39,7 +39,6 @@ th, td {
 
 tbody tr:hover {
     background-color: #161616;
-    border-radius: 10px;
 }
 
 tbody tr {
@@ -61,8 +60,7 @@ tbody tr {
 }
 
 .edit-button:hover {
-    color: #FFA500;
-    transition: color 400ms ease-out;
+    scale: 1.2;
 }
 
 .delete-button {
@@ -73,6 +71,5 @@ tbody tr {
 }
 
 .delete-button:hover {
-    color: #FF4C4C;
-    transition: color 400ms ease-out;
+    scale: 1.2;
 }

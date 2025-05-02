@@ -34,8 +34,10 @@ export function Menu() {
                     <aside className="sidebar">
 
                         <header className="sidebar-header">
-                            <img className="logo-img" src="/src/assets/img/logo.png" />
-                            <h1 className="name-company">MarombaApp</h1>
+                            <h1 className="title-header">
+                                <img className="logo-img" src="/src/assets/img/logo.png" />  
+                                <span className="name-company">MarombaApp</span>  
+                            </h1>
                         </header>
                         <nav>
                             <div className="profile">
@@ -53,20 +55,20 @@ export function Menu() {
                                     <span>Usuários</span>
                                 </span>
                             </button>
-                            <button>
+                            <button onClick={(e) => navigate("/menu/companies")}>
                                 <span>
                                     <i className="material-symbols-outlined">
-                                        menu
+                                        apartment
                                     </i>
-                                    <span>Search</span>
+                                    <span>Empresas</span>
                                 </span>
                             </button>
-                            <button>
+                            <button onClick={(e) => navigate("/menu/exercises")}>
                                 <span>
                                     <i className="material-symbols-outlined">
-                                        menu
+                                        fitness_center
                                     </i>
-                                    <span>Explore</span>
+                                    <span>Exercícios</span>
                                 </span>
                             </button>
                             <button>

@@ -14,6 +14,8 @@ import { AuthorizationModel } from "../../models/AuthorizationModel";
 import { CompanyService } from "../../services/CompanyService";
 import { CompanyModel } from "../../models/CompanyModel";
 import { cpfMask, phoneMask } from "../../Masks/mask";
+import { GenderService } from "../../services/GenderService";
+import { AuthorizationService } from "../../services/AuthorizationService";
 
 export function User() {
 	const [genders, setGenders] = useState<GenderModel[]>(
@@ -30,6 +32,8 @@ export function User() {
 	const location = useLocation();
 	const userLocal = getUserLocalStorage();
 	const userService = new UserService();
+	const genderService = new GenderService();
+	const authorizationService = new AuthorizationService();
 	const companyService = new CompanyService();
 	const titlePage = location.state.titlePage;
 	const labelButton = location.state.labelButton;
@@ -73,8 +77,8 @@ export function User() {
 	useEffect(() => {
 		const getAllGenders = async () => {
 			if (userLocal) {
-				await userService
-					.getAllGenders(userLocal.token)
+				await genderService
+					.getAll(userLocal.token)
 					.then((response) => {
 						setGenders(response);
 					})
@@ -98,8 +102,8 @@ export function User() {
 
 		const getAllAuthorizations = async () => {
 			if (userLocal) {
-				await userService
-					.getAllAuthorizations(userLocal.token)
+				await authorizationService
+					.getAll(userLocal.token)
 					.then((response) => {
 						setAuthorizations(response);
 					})
@@ -201,7 +205,7 @@ export function User() {
 						throw error.response.data.error_message;
 					} catch (error) {
 						throw (
-							"Erro ao salvar usuário, por favor tente novamente mais tarde. \n" +
+							"Erro ao atualizar usuário, por favor tente novamente mais tarde. \n" +
 							error
 						);
 					}
@@ -239,110 +243,112 @@ export function User() {
 	return (
 		<>
 			<div className="panel">
-				<form className="user-form" onSubmit={handleSubmit(onSubmit)}>
-					<h1>{titlePage}</h1>
-					<Input
-						name="name"
-						register={register}
-						type="input"
-						label="Nome"
-						setValue={setValue}
-						value={getValues("name")}
-						clearErrors={clearErrors}
-						required={true}
-						error={errors.name ? true : false}
-					/>
-					<Input
-						name="cpf"
-						register={register}
-						type="cpf"
-						label="CPF"
-						minLength={14}
-						setValue={setValue}
-						value={getValues("cpf")}
-						clearErrors={clearErrors}
-						required={true}
-						error={errors.cpf ? true : false}
-					/>
-					<Input
-						name="email"
-						register={register}
-						type="email"
-						label="Email"
-						setValue={setValue}
-						value={getValues("email")}
-						clearErrors={clearErrors}
-						required={true}
-						error={errors.email ? true : false}
-					/>
-					<Input
-						name="phoneNumber"
-						register={register}
-						type="phone"
-						label="Celular"
-						minLength={15}
-						setValue={setValue}
-						value={getValues("phoneNumber")}
-						clearErrors={clearErrors}
-						required={true}
-						error={errors.phoneNumber ? true : false}
-					/>
-					<Select
-						name="gender"
-						register={register}
-						setValue={setValue}
-						value={getValues("gender")}
-						clearErrors={clearErrors}
-						label="Gênero"
-						list={genders}
-						required={true}
-						error={errors.gender ? true : false}
-					/>
-					<Input
-						name="weight"
-						register={register}
-						type="number"
-						label="Peso"
-						minLength={2}
-						setValue={setValue}
-						value={getValues("weight")}
-						clearErrors={clearErrors}
-						required={true}
-						error={errors.weight ? true : false}
-					/>
-					<DatePicker
-						name="birthDate"
-						register={register}
-						setValue={setValue}
-						value={getValues("birthDate")}
-						clearErrors={clearErrors}
-						label="Data de nascimento"
-						required={true}
-						error={errors.birthDate ? true : false}
-					/>
-					<Select
-						name="authorization"
-						register={register}
-						setValue={setValue}
-						value={getValues("authorization")}
-						clearErrors={clearErrors}
-						label="Autorização"
-						list={authorizations}
-						required={true}
-						error={errors.authorization ? true : false}
-					/>
-					<AutoComplete
-						name="company"
-						register={register}
-						setValue={setValue}
-						value={getValues("company")}
-						clearErrors={clearErrors}
-						label="Empresa"
-						list={companys}
-						required={true}
-						icon="search"
-						error={errors.company ? true : false}
-					/>
+				<form className="form-container" onSubmit={handleSubmit(onSubmit)}>
+					<div className="form-content">
+						<h1>{titlePage}</h1>
+						<Input
+							name="name"
+							register={register}
+							type="input"
+							label="Nome"
+							setValue={setValue}
+							value={getValues("name")}
+							clearErrors={clearErrors}
+							required={true}
+							error={errors.name ? true : false}
+						/>
+						<Input
+							name="cpf"
+							register={register}
+							type="cpf"
+							label="CPF"
+							minLength={14}
+							setValue={setValue}
+							value={getValues("cpf")}
+							clearErrors={clearErrors}
+							required={true}
+							error={errors.cpf ? true : false}
+						/>
+						<Input
+							name="email"
+							register={register}
+							type="email"
+							label="Email"
+							setValue={setValue}
+							value={getValues("email")}
+							clearErrors={clearErrors}
+							required={true}
+							error={errors.email ? true : false}
+						/>
+						<Input
+							name="phoneNumber"
+							register={register}
+							type="phone"
+							label="Celular"
+							minLength={15}
+							setValue={setValue}
+							value={getValues("phoneNumber")}
+							clearErrors={clearErrors}
+							required={true}
+							error={errors.phoneNumber ? true : false}
+						/>
+						<Select
+							name="gender"
+							register={register}
+							setValue={setValue}
+							value={getValues("gender")}
+							clearErrors={clearErrors}
+							label="Gênero"
+							list={genders}
+							required={true}
+							error={errors.gender ? true : false}
+						/>
+						<Input
+							name="weight"
+							register={register}
+							type="number"
+							label="Peso"
+							minLength={2}
+							setValue={setValue}
+							value={getValues("weight")}
+							clearErrors={clearErrors}
+							required={true}
+							error={errors.weight ? true : false}
+						/>
+						<DatePicker
+							name="birthDate"
+							register={register}
+							setValue={setValue}
+							value={getValues("birthDate")}
+							clearErrors={clearErrors}
+							label="Data de nascimento"
+							required={true}
+							error={errors.birthDate ? true : false}
+						/>
+						<Select
+							name="authorization"
+							register={register}
+							setValue={setValue}
+							value={getValues("authorization")}
+							clearErrors={clearErrors}
+							label="Autorização"
+							list={authorizations}
+							required={true}
+							error={errors.authorization ? true : false}
+						/>
+						<AutoComplete
+							name="company"
+							register={register}
+							setValue={setValue}
+							value={getValues("company")}
+							clearErrors={clearErrors}
+							label="Empresa"
+							list={companys}
+							required={true}
+							icon="search"
+							error={errors.company ? true : false}
+						/>
+					</div>
 					<div className="buttons-div">
 						{!disableBack && (
 							<button
