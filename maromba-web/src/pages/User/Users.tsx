@@ -21,7 +21,7 @@ export function Users() {
 	const columns: Column[] = [
 		{ key: "name", label: "Nome" },
 		{ key: "cpf", label: "CPF" },
-		{ key: "birthDate", label: "birthDate" },
+		{ key: "birthDate", label: "Data de nascimento" },
 	];
 
 	const [users, setUsers] = useState<UserModel[]>([]);
