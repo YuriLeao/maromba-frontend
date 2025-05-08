@@ -216,8 +216,8 @@ export const Table = ({
 	};
 
   const sortedData = [...data].sort((a, b) => {
-    const valueA = a[sortKey].toString().toLowerCase();
-    const valueB = b[sortKey].toString().toLowerCase();
+    const valueA = getNestedValue(a, sortKey)?.toString().toLowerCase() || '';
+  	const valueB = getNestedValue(b, sortKey)?.toString().toLowerCase() || '';
   
     // Verifica se é uma data no formato dd/mm/yyyy
     const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -239,7 +239,6 @@ export const Table = ({
       return sortOrder === "asc" ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
     }
   
-    // Se não for uma data, verifica se é um número
     const numA = parseFloat(valueA);
     const numB = parseFloat(valueB);
   
@@ -247,7 +246,6 @@ export const Table = ({
       return sortOrder === "asc" ? numA - numB : numB - numA;
     }
   
-    // Comparação padrão para strings
     if (valueA < valueB) {
       return sortOrder === "asc" ? -1 : 1;
     }
@@ -257,6 +255,10 @@ export const Table = ({
     return 0;
   });  
 
+  function getNestedValue(obj: any, path: string) {
+	return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
+
 	return (
 		<table ref={tableRef}>
 			<thead>
@@ -264,27 +266,28 @@ export const Table = ({
 					{columns.map((column, index) =>
 						showColumns[index] ? (
 							<th key={column.key} onClick={() => handleSort(column.key)}>
-								{column.label}{" "}
 								{sortKey === column.key
 									? sortOrder === "asc"
 										? "↑"
 										: "↓"
 									: ""}
+								{" "}
+								{column.label}
 							</th>
 						) : null
 					)}
-					<th className="action-olunm"></th>
+					<th className="action-column"></th>
 				</tr>
 			</thead>
 			<tbody>
 				{sortedData.map((item) => (
-					<tr key={item.id as number}>
+					<tr key={item.id}>
 						{columns.map((column, index) =>
 							showColumns[index] ? (
-								<td key={column.key}>{item[column.key]}</td>
+								<td key={column.key}>{getNestedValue(item, column.key)}</td>
 							) : null
 						)}
-						<td className="action-colunm">
+						<td className="action-column">
 							<button
 								onClick={() => handleEdit(item.id)}
 								className="material-symbols-outlined pointer edit-button"

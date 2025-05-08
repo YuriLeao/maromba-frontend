@@ -20,7 +20,7 @@ export function Exercises() {
 
 	const columns: Column[] = [
 		{ key: "name", label: "Nome" },
-		{ key: "muscleGroup", label: "Grupo Muscular" },
+		{ key: "muscleGroup.description", label: "Grupo Muscular" }
 	];
 
 	const [exercises, setExercises] = useState<ExerciseModel[]>([]);
