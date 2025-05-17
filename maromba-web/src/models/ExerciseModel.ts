@@ -5,4 +5,5 @@ export interface ExerciseModel {
 	name: string;
 	gif: string;
 	muscleGroup: MuscleGroupModel;
+	companyId: string;
 }

@@ -35,6 +35,7 @@ export function Exercise() {
 			name: exerciseEdit.name,
 			gif: exerciseEdit.gif,
 			muscleGroup: exerciseEdit.muscleGroup,
+			companyId: userLocal.authorization.id == 'A' ? null : userLocal.companyId,
 		};
 	}
 
@@ -89,6 +90,7 @@ export function Exercise() {
 			name: form.name,
 			gif: form.gif,
 			muscleGroup: form.muscleGroup,
+			companyId: userLocal.authorization.id == 'A' ? null : userLocal.companyId,
 		};
 
 		if (exerciseEdit !== undefined) {

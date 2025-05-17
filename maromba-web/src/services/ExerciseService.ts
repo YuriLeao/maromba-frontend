@@ -3,13 +3,21 @@ import { Pageable } from "../models/Pageable";
 import { api } from "./api";
 
 export class ExerciseService {
-	async getAll(token: string) {
+	async getAllByCompanyId(token: string, companyId: string | null) {
 		try {
+
+			const params: Record<string, string> = {};
+		
+			if (companyId != null) {
+				params['companyId'] = companyId;
+			}
+	
 			const response = await api
-				.get<Pageable<ExerciseModel>>('/exercise-service/getAll', {
+				.get<Pageable<ExerciseModel>>('/exercise-service/getAllByCompanyId', {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
+					params: params,
 				})
 				.then((response) => {
 					return response.data;

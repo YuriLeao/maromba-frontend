@@ -26,10 +26,10 @@ export function Exercises() {
 	const [exercises, setExercises] = useState<ExerciseModel[]>([]);
 
 	useEffect(() => {
-		const getAll = async () => {
+		const getAllByCompanyId = async () => {
 			if (userLocal) {
 				await exerciseService
-					.getAll(userLocal.token)
+					.getAllByCompanyId(userLocal.token, userLocal.authorization.id == 'A' ? null : userLocal.companyId)
 					.then((response) => {
 						setExercises(response.content);
 						setFilterSearch(response.content);
@@ -52,7 +52,7 @@ export function Exercises() {
 			}
 		};
 
-		getAll();
+		getAllByCompanyId();
 	}, []);
 
 	const [filterSearch, setFilterSearch] = useState<ExerciseModel[]>(exercises);
